@@ -1,14 +1,17 @@
 var express = require('express');
 var router = express.Router();
-//var expressValidator = require('express-validator');
 var models = require('../models/models');
 var User = models.User;
 
 module.exports = function(passport) {
 
+  //not in use right now.
+
   router.get('/signup',function(req,res){
     res.render('signup');
   })
+
+  //not in use right now.
 
   router.post('/signup',function(req,res){
         var newUser=new User({
