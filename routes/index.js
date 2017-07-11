@@ -8,9 +8,10 @@ var Room=models.Room;
 
 module.exports=function(io){
 
+  //check how this works
+
   router.use('/',function(req,res,next){
     if(req.user){
-      //res.redirect('/contacts');
       return next();
     }else{
       console.log("here");
@@ -18,12 +19,16 @@ module.exports=function(io){
     }
   })
 
+  //home which renders two buttons
+
   router.get('/', function(req, res, next) {
     console.log(req.user);
     res.render('home',{
       id:req.user.spotifyId
     });
   });
+
+  // displays list of available rooms
 
   router.get('/rooms',function(req,res,next){
     //console.log("reached here successfully");
@@ -35,12 +40,15 @@ module.exports=function(io){
     })
   })
 
+  // option to createRoom
+
   router.get('/createRoom',function(req,res,next){
     res.render('createRoom',{
       spotifyId:req.user.spotifyId,
     });
   })
 
+  //closeRoom but will move to sockets so remove this
 
   router.post('/closeRoom', function(req, res, next) {
     Rooms.remove({djSpotifyId:req.id},function(err,room){

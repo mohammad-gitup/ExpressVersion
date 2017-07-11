@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
+
 //passport
 
 var passport=require('passport');
@@ -66,7 +67,7 @@ passport.use(new SpotifyStrategy({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', auth(passport));
+app.use('/', auth(passport)); //passed passport here
 app.use('/', routes(io)); //passed io here
 
 // catch 404 and forward to error handler
