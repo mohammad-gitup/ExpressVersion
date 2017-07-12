@@ -173,6 +173,7 @@ module.exports=function(io){
 
         })
         .catch(function(error){
+          console.log("here");
           console.log(error);
         })
 
