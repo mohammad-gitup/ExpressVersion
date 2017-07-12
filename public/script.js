@@ -4,10 +4,7 @@ $(document).ready(function() {
 
   socket.on('connect', function() {
     console.log('Connected!');
-
   });
-
-  socket.emit('spotifySetup', localStorage.getItem("spotifyId"));
 
   socket.on('getRefreshToken', function(refreshToken){
       localStorage.setItem("refreshToken",refreshToken);
@@ -52,6 +49,7 @@ $(document).ready(function() {
 
   $('#createRoom').on('click' ,function(event) {
     event.preventDefault();
+    socket.emit('spotifySetup', localStorage.getItem("spotifyId"));
     var room = $('#roomName').val();
     var id = localStorage.getItem('spotifyId');
     var socketObj = {'room': room, 'id': id};
@@ -74,6 +72,7 @@ $(document).ready(function() {
 
   $('.joinexistingRoom').on('click',function(event){
     event.preventDefault();
+    socket.emit('spotifySetup', localStorage.getItem("spotifyId"));
     var roomName = $(this).attr("data-id");
     console.log("joining room" + roomName);
     socket.emit('joinRoom', roomName);
