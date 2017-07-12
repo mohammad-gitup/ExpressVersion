@@ -57,6 +57,8 @@ module.exports=function(io){
 
   })
 
+  //post request of closeRoom
+
   router.post('/createRoom',function(req,res,next){
 
     console.log("reached here and creating room");
@@ -81,7 +83,9 @@ module.exports=function(io){
 
   })
 
-   io.on('connection',function(socket){
+  // socket stuff
+
+  io.on('connection',function(socket){
 
     socket.on('spotifySetup', function(spotifyId) {
       console.log("spotify setup");
@@ -186,13 +190,13 @@ module.exports=function(io){
       setInterval(function() {
         spotifyApi.refreshAccessToken()
         .then(function(data) {
-          console.log('The access token has been refreshed!');
+          console.log('The access token has been refreshed !');
           // Save the access token so that it's used in future calls
           spotifyApi.setAccessToken(data.body['access_token']);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
         }, function(err) {
           console.log('Could not refresh access token', err);
-        });
+        });//dsfgsd
       }, 60000 *30 );
 
       User.findOne({spotifyId: spotifyId}, function(err, user){
@@ -204,7 +208,7 @@ module.exports=function(io){
         .then(function(){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
-          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 20000);
+          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 10000);
 
         })
       })
