@@ -105,13 +105,13 @@ $(document).ready(function() {
     console.log(rooms);
     var listofRooms = [];
     for(var key in rooms){
-      if(rooms[key].hasOwnProperty('spotifyId')){
+      if(rooms[key].hasOwnProperty('DJToken')){
         listofRooms.push(key);
       }
     }
     console.log(listofRooms);
     $('.wrapper').empty();
-    $('.wrapper').append(`<h3 style={"color":white}>List of available rooms</h3>`);
+    $('.wrapper').append(`<h3 style="color:white">List of available rooms</h3>`);
     $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
 
     for(var i =0  ; i< listofRooms.length ;i++){
