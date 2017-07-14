@@ -23,8 +23,9 @@ module.exports=function(io){
 
   router.get('/', function(req, res, next) {
     console.log(req.user);
-    res.render('home',{
-      id:req.user.spotifyId
+    res.render('main',{
+      spotifyId:req.user.spotifyId,
+      imageURL: req.user.image
     });
   });
 
@@ -126,7 +127,9 @@ module.exports=function(io){
         })
     })
 
-    socket.on('createRoom',function(socketObj){
+    socket.on('startRoom',function(socketObj){
+
+      console.log("reached here", socketObj);
 
       var getDJData = function(DJAccessToken, room) {
 
@@ -182,7 +185,7 @@ module.exports=function(io){
 
       var room = socketObj['room'];
 
-      var spotifyId = socketObj['id'];
+      var spotifyId = socketObj['spotifyId'];
 
       var spotifyApi = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
@@ -212,7 +215,6 @@ module.exports=function(io){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
           setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
-
         })
       })
 

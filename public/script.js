@@ -15,81 +15,79 @@ $(document).ready(function() {
   })
 
   socket.on('getAccessToken', function(userAccessToken) {
-      localStorage.setItem("accessToken", userAccessToken);
-    })
+    localStorage.setItem("accessToken", userAccessToken);
+  })
 
   socket.on('DJSetting', function(data) {
 
-      console.log("reaching dj setting");
-      var songProgress = data.a;
-      var songURI = data.b;
-      //ajax call will be done here
-      $.ajax({
-        url:'https://api.spotify.com/v1/me/player/play',
-        method:'PUT',
-        headers: { 'Authorization':'Bearer ' + localStorage.getItem("accessToken"), "Content-Type": "application/json"},
-        data: JSON.stringify({
-          "uris" :[songURI]
-        }),
-        dataType: "JSON",
-        success: function(data){
-          console.log("this is it bitch");
-          $.ajax({
-            url: `https://api.spotify.com/v1/me/player/seek?position_ms=${songProgress}`,
-            headers: { 'Authorization': 'Bearer ' +  localStorage.getItem("accessToken")},
-            method:'put',
-            json:true,
-            success:function(something){
-              console.log("lets go home");
-            }
-
-          })
-        }
-      })
-    })
-
-  $('#createRoom').on('click' ,function(event) {
-    event.preventDefault();
-    var room = $('#roomName').val();
-    var id = localStorage.getItem('spotifyId');
-    var socketObj = {'room': room, 'id': id};
-    socket.emit('createRoom', socketObj);
+    console.log("reaching dj setting");
+    var songProgress = data.a;
+    var songURI = data.b;
+    //ajax call will be done here
     $.ajax({
-      url: '/createRoom',
-      method: 'post',
-      data: {
-        roomName:room,
-        djSpotifyId:id
-      },
-      success: function(response){
-        console.log("logging here",response);
-        $('.main').append('<p>You are live now</p>')
-        var offButton = $(`<button type="submit" id="closeRoom" data-id=${response.djSpotifyId}> Go offline </button>`);
-        $('.main').append(offButton);
+      url:'https://api.spotify.com/v1/me/player/play',
+      method:'PUT',
+      headers: { 'Authorization':'Bearer ' + localStorage.getItem("accessToken"), "Content-Type": "application/json"},
+      data: JSON.stringify({
+        "uris" :[songURI]
+      }),
+      dataType: "JSON",
+      success: function(data){
+        console.log("this is it bitch");
+        $.ajax({
+          url: `https://api.spotify.com/v1/me/player/seek?position_ms=${songProgress}`,
+          headers: { 'Authorization': 'Bearer ' +  localStorage.getItem("accessToken")},
+          method:'put',
+          json:true,
+          success:function(something){
+            console.log("lets go home");
+          }
+
+        })
       }
     })
   })
 
-  $('#joinRoom').on('click', function(event){
-    event.preventDefault();
-    console.log("reached jquery.");
-    socket.emit('getRooms');
+  $('#createRoom').on('click' ,function(event) {
+    $('.wrapper').empty();
+    var createTemplate = $(
+      `<div class="main">
+        <input type="text" name="roomNameBar" id="roomName"> </br>
+        <button type="submit" name="button" id="startRoom"> Submit </button>
+      </div>`
+    )
+    $('.wrapper').append(createTemplate);
   })
+
+  $('.wrapper').on('click', '#startRoom', function(event){
+    event.preventDefault();
+    var room = $('#roomName').val();
+    var spotifyId = localStorage.getItem('spotifyId');
+    var imageURL = localStorage.getItem('imageURL')
+    var socketObj = {'room': room, 'spotifyId': spotifyId, imageURL:imageURL};
+    socket.emit('startRoom', socketObj);
+  })
+
+  $('#joinRoom').on('click', function(event){
+  event.preventDefault();
+  console.log("reached jquery.");
+  socket.emit('getRooms');
+})
 
   $('.joinexistingRoom').on('click',function(event){
-    event.preventDefault();
-    var roomName = $(this).attr("data-id");
-    console.log("joining room" + roomName);
-    socket.emit('joinRoom', roomName);
-  });
+  event.preventDefault();
+  var roomName = $(this).attr("data-id");
+  console.log("joining room" + roomName);
+  socket.emit('joinRoom', roomName);
+});
 
   $('#closeRoom').on('click',function(){
-    var id=$(this).attr('data-id');
+  var id=$(this).attr('data-id');
 
-  })
+})
 
   //Benjamin added - this function is the functionality of the search Bar
-    function myFunction() {
+  function myFunction() {
         // Declare variables
         var input, filter, ul, li, a, i;
         input = document.getElementById('myInput');
