@@ -8,7 +8,7 @@ var Room=models.Room;
 
 module.exports=function(io){
 
-  //check how this works
+  //check how this works //checked
 
   router.use('/',function(req,res,next){
     if(req.user){
@@ -48,16 +48,7 @@ module.exports=function(io){
     });
   })
 
-  //closeRoom but will move to sockets so remove this
-
-  router.post('/closeRoom', function(req, res, next) {
-    Rooms.remove({djSpotifyId:req.id},function(err,room){
-      res.redirect('/');
-    })
-
-  })
-
-  //post request of closeRoom
+  //post request of createRoom
 
   router.post('/createRoom',function(req,res,next){
 
@@ -82,6 +73,9 @@ module.exports=function(io){
     })
 
   })
+
+  // joinRoom takes you to this page first but this needs to be modified later
+
 
   // socket stuff
 
@@ -133,7 +127,6 @@ module.exports=function(io){
     })
 
     socket.on('createRoom',function(socketObj){
-
 
       var getDJData = function(DJAccessToken, room) {
 
@@ -203,7 +196,7 @@ module.exports=function(io){
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
         }, function(err) {
           console.log('Could not refresh access token', err);
-        });//dsfgsd
+        });
       }, 60000 *30 );
 
       User.findOne({spotifyId: spotifyId}, function(err, user){
