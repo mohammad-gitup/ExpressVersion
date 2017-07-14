@@ -11,6 +11,7 @@ var userSchema=new Schema({
   password:String,
   spotifyId:String,
   refreshToken:String,
+  image: String
 })
 
 var roomSchema=new Schema({
