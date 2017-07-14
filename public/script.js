@@ -102,7 +102,7 @@ $(document).ready(function() {
     })
 
   socket.on('rooms', function(rooms){
-    console.log(data);
+    console.log(rooms);
     var listofRooms = [];
     for(var key in rooms){
       if(rooms[key].hasOwnProperty('spotifyId')){
