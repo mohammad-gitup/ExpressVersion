@@ -261,6 +261,11 @@ module.exports=function(io){
       })
     })
 
+    socket.on('getRooms',function(){
+      console.log("reached getRooms");
+      console.log(socket.rooms);
+    })
+
 
   })
 
