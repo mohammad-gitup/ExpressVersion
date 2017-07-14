@@ -57,7 +57,8 @@ module.exports=function(io){
     var newRoom=new Room({
       roomName:req.body.roomName,
       djRefreshToken:req.user.refreshToken,
-      djSpotifyId:req.user.spotifyId
+      djSpotifyId:req.user.spotifyId,
+      imageURL : req.user.imageURL
     })
 
     console.log(newRoom);
@@ -255,6 +256,7 @@ module.exports=function(io){
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
         socket.emit("DJSetting",{a: data.a, b: data.b});
+        socket.emit("roomInfo", {room:requestedRoom, djPhoto: })
       })
       .catch(function(error){
         console.log(error);
