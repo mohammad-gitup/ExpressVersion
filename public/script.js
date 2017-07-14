@@ -115,9 +115,10 @@ $(document).ready(function() {
 
     for(var i =0  ; i< listofRooms.length ;i++){
       var roomItem = $(`<li>
-            <button type="button" class="joinexistingRoom" data-id='${key}'>${key}</button>
+            <button type="button" class="joinexistingRoom" data-id='${listofRooms[i]}'>${listofRooms[i]}</button>
                   </li>`);
       $('#listofRooms').append(roomItem);
+
     }
 
   })
