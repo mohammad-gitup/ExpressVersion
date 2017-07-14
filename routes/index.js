@@ -203,7 +203,7 @@ module.exports=function(io){
           // Save the access token so that it's used in future calls
           spotifyApi.setAccessToken(data.body['access_token']);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
-          io.sockets.adapter.rooms[room].imageURL = imageURL;
+
         }, function(err) {
           console.log('Could not refresh access token', err);
         });
@@ -218,6 +218,7 @@ module.exports=function(io){
         .then(function(){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
+          io.sockets.adapter.rooms[room].imageURL = imageURL;
           setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
         })
       })
@@ -271,7 +272,7 @@ module.exports=function(io){
     socket.on('getRooms',function(){
       console.log("reached getRooms");
       console.log(io.sockets.adapter.rooms);
-      socket.emit('rooms', io.sockets.adapter.rooms)
+      socket.emit('rooms', io.sockets.adapter.rooms);
     })
 
 
