@@ -17,7 +17,8 @@ var userSchema=new Schema({
 var roomSchema=new Schema({
   roomName:String,
   djRefreshToken:String,
-  djSpotifyId:String
+  djSpotifyId:String,
+  imageURL:String
 })
 
 userSchema.statics.findOrCreate=function(obj1,obj2,cb){

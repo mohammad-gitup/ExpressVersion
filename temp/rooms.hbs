@@ -1,3 +1,5 @@
+<div class="container">
+<div class = 'wrapper'>
 {{#if rooms}}
 <h3>List of available rooms</h3>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
@@ -9,6 +11,30 @@
 {{else}}
 <h3>Sorry no available room</h3>
 {{/if}}
+<div>
+<div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script src="/static/script.js"></script>
+
+<script>
+//Benjamin added - this function is the functionality of the search Bar
+  function myFunction() {
+      // Declare variables
+      var input, filter, ul, li, a, i;
+      input = document.getElementById('myInput');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName('li');
+
+      // Loop through all list items, and hide those who don't match the search query
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("button")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+  };
+</script>
