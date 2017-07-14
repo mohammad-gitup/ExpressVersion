@@ -8,7 +8,7 @@ var Room=models.Room;
 
 module.exports=function(io){
 
-  //check how this works
+  //check how this works //checked
 
   router.use('/',function(req,res,next){
     if(req.user){
@@ -48,16 +48,7 @@ module.exports=function(io){
     });
   })
 
-  //closeRoom but will move to sockets so remove this
-
-  router.post('/closeRoom', function(req, res, next) {
-    Rooms.remove({djSpotifyId:req.id},function(err,room){
-      res.redirect('/');
-    })
-
-  })
-
-  //post request of closeRoom
+  //post request of createRoom
 
   router.post('/createRoom',function(req,res,next){
 
@@ -82,6 +73,9 @@ module.exports=function(io){
     })
 
   })
+
+  // joinRoom takes you to this page first but this needs to be modified later
+
 
   // socket stuff
 
@@ -134,7 +128,6 @@ module.exports=function(io){
 
     socket.on('createRoom',function(socketObj){
 
-
       var getDJData = function(DJAccessToken, room) {
 
         console.log("getting dj data being callled every ten seconds.");
@@ -150,7 +143,6 @@ module.exports=function(io){
         DJSpotifyApi.getMyCurrentPlaybackState()
         .then(function(data) {
 
-
           if ( !io.sockets.adapter.rooms[room].songURI ) {
             console.log("****FIRST TIME IT SHOULD ENTER HERE****");
             console.log(data);
@@ -160,6 +152,9 @@ module.exports=function(io){
           }
           else {
             console.log("****same song****");
+            if(!data.body.is_playing){
+
+            }
             if( io.sockets.adapter.rooms[room].songURI !== data.body.item.uri ) {
               console.log("song changed altogether");
               io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
@@ -167,12 +162,13 @@ module.exports=function(io){
               socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
             }
             else {
-
-              if(Math.abs(data.body.progress_ms-io.sockets.adapter.rooms[room].timeProgress) > 20000){
-                console.log("****same song but change in time*****");
-                socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+              if(data.body.is_playing){
+                if(Math.abs(data.body.progress_ms - io.sockets.adapter.rooms[room].timeProgress) > 20000 ){
+                  console.log("****same song but change in time*****");
+                  socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+                }
+                io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
               }
-              io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
             }
           }
 
@@ -203,7 +199,7 @@ module.exports=function(io){
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
         }, function(err) {
           console.log('Could not refresh access token', err);
-        });//dsfgsd
+        });
       }, 60000 *30 );
 
       User.findOne({spotifyId: spotifyId}, function(err, user){
@@ -215,7 +211,7 @@ module.exports=function(io){
         .then(function(){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
-          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 10000);
+          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
 
         })
       })

@@ -81,12 +81,7 @@ $(document).ready(function() {
 
   $('#closeRoom').on('click',function(){
     var id=$(this).attr('data-id');
-    $.ajax({
-      url: '/closeRoom',
-      data: {
-        id:id
-      }
-    })
+    
   })
 
 
