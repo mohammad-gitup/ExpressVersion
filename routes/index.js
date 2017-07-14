@@ -98,6 +98,10 @@ module.exports=function(io){
 
       User.findOne({spotifyId: spotifyId}, function(err, user){
           console.log(err, user);
+          if (!user) {
+            console.log("user not found");
+            return;
+          }
           spotifyApi.setRefreshToken(user.refreshToken);
           socket.emit('getRefreshToken', user.refreshToken);
           spotifyApi.refreshAccessToken()
