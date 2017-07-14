@@ -72,6 +72,12 @@ $(document).ready(function() {
     })
   })
 
+  $('#joinRoom').on('click', function(event){
+    event.preventDefault();
+    console.log("reached jquery.");
+    socket.emit('getRooms');
+  })
+
   $('.joinexistingRoom').on('click',function(event){
     event.preventDefault();
     var roomName = $(this).attr("data-id");
