@@ -143,7 +143,6 @@ module.exports=function(io){
         DJSpotifyApi.getMyCurrentPlaybackState()
         .then(function(data) {
 
-
           if ( !io.sockets.adapter.rooms[room].songURI ) {
             console.log("****FIRST TIME IT SHOULD ENTER HERE****");
             console.log(data);
@@ -153,6 +152,9 @@ module.exports=function(io){
           }
           else {
             console.log("****same song****");
+            if(!data.body.is_playing){
+
+            }
             if( io.sockets.adapter.rooms[room].songURI !== data.body.item.uri ) {
               console.log("song changed altogether");
               io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
@@ -160,12 +162,13 @@ module.exports=function(io){
               socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
             }
             else {
-
-              if(Math.abs(data.body.progress_ms-io.sockets.adapter.rooms[room].timeProgress) > 20000){
-                console.log("****same song but change in time*****");
-                socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+              if(data.body.is_playing){
+                if(Math.abs(data.body.progress_ms - io.sockets.adapter.rooms[room].timeProgress) > 20000 ){
+                  console.log("****same song but change in time*****");
+                  socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+                }
+                io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
               }
-              io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
             }
           }
 
@@ -208,7 +211,7 @@ module.exports=function(io){
         .then(function(){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
-          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 10000);
+          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
 
         })
       })
