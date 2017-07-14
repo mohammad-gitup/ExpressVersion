@@ -69,17 +69,17 @@ $(document).ready(function() {
   })
 
   $('#joinRoom').on('click', function(event){
-  event.preventDefault();
-  console.log("reached jquery.");
-  socket.emit('getRooms');
-})
+    event.preventDefault();
+    console.log("reached jquery.");
+    socket.emit('getRooms');
+  })
 
   $('.joinexistingRoom').on('click',function(event){
-  event.preventDefault();
-  var roomName = $(this).attr("data-id");
-  console.log("joining room" + roomName);
-  socket.emit('joinRoom', roomName);
-});
+    event.preventDefault();
+    var roomName = $(this).attr("data-id");
+    console.log("joining room" + roomName);
+    socket.emit('joinRoom', roomName);
+  });
 
   socket.on('roomInfo', function(info) {
     var users = `<div class="singleDot"> ... </div>`
@@ -100,6 +100,10 @@ $(document).ready(function() {
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
     })
+
+  socket.on('rooms', function(data){
+    console.log(data);
+  })
 
 
   $('#closeRoom').on('click',function(){
