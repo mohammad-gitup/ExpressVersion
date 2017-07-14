@@ -12,7 +12,7 @@ module.exports=function(io){
 
   router.use('/',function(req,res,next){
     if(req.user){
-      return next();
+       next();
     }else{
       console.log("here");
       res.redirect('/login');
@@ -57,6 +57,8 @@ module.exports=function(io){
 
   })
 
+  //post request of closeRoom
+
   router.post('/createRoom',function(req,res,next){
 
     console.log("reached here and creating room");
@@ -81,10 +83,13 @@ module.exports=function(io){
 
   })
 
-   io.on('connection',function(socket){
+  // socket stuff
+
+  io.on('connection',function(socket){
 
     socket.on('spotifySetup', function(spotifyId) {
       console.log("spotify setup");
+
       var spotifyApi = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
         clientSecret : process.env.SPOTIFY_SECRET,
@@ -92,6 +97,11 @@ module.exports=function(io){
       });
 
       User.findOne({spotifyId: spotifyId}, function(err, user){
+          console.log(err, user);
+          if (!user) {
+            console.log("user not found");
+            return;
+          }
           spotifyApi.setRefreshToken(user.refreshToken);
           socket.emit('getRefreshToken', user.refreshToken);
           spotifyApi.refreshAccessToken()
@@ -159,7 +169,7 @@ module.exports=function(io){
             else {
 
               if(Math.abs(data.body.progress_ms-io.sockets.adapter.rooms[room].timeProgress) > 20000){
-                console.log("****same song but change in time****");
+                console.log("****same song but change in time*****");
                 socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
               }
               io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
@@ -168,6 +178,7 @@ module.exports=function(io){
 
         })
         .catch(function(error){
+          console.log("here");
           console.log(error);
         })
 
@@ -186,13 +197,13 @@ module.exports=function(io){
       setInterval(function() {
         spotifyApi.refreshAccessToken()
         .then(function(data) {
-          console.log('The access token has been refreshed!');
+          console.log('The access token has been refreshed !');
           // Save the access token so that it's used in future calls
           spotifyApi.setAccessToken(data.body['access_token']);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
         }, function(err) {
           console.log('Could not refresh access token', err);
-        });
+        });//dsfgsd
       }, 60000 *30 );
 
       User.findOne({spotifyId: spotifyId}, function(err, user){
@@ -204,7 +215,7 @@ module.exports=function(io){
         .then(function(){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
-          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 20000);
+          setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 10000);
 
         })
       })
@@ -253,6 +264,7 @@ module.exports=function(io){
         console.log(error);
       })
     })
+
 
   })
 
