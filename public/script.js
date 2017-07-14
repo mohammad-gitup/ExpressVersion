@@ -109,8 +109,9 @@ $(document).ready(function() {
         listofRooms.push(key);
       }
     }
+    console.log(listofRooms);
     $('.wrapper').empty();
-    $('.wrapper').append(`<h3>List of available rooms</h3>`);
+    $('.wrapper').append(`<h3 style={"color":white}>List of available rooms</h3>`);
     $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
 
     for(var i =0  ; i< listofRooms.length ;i++){
