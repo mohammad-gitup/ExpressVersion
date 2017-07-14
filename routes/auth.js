@@ -28,14 +28,13 @@ module.exports = function(passport) {
 
   })
 
+  // main login routes
+
   router.get('/login',function(req,res){
     res.render('login');
   })
 
-  router.get('/auth/spotify',
-  passport.authenticate('spotify',
-  {scope: ['user-read-email', 'user-read-private',
-  'user-modify-playback-state', 'user-read-playback-state'] }));
+  router.get('/auth/spotify', passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private', 'user-modify-playback-state', 'user-read-playback-state'] }));
 
   router.get('/auth/spotify/callback',passport.authenticate('spotify', { failureRedirect: '/login' }),
     function(req, res) {

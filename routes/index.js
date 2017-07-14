@@ -12,7 +12,7 @@ module.exports=function(io){
 
   router.use('/',function(req,res,next){
     if(req.user){
-      return next();
+       next();
     }else{
       console.log("here");
       res.redirect('/login');
@@ -260,6 +260,7 @@ module.exports=function(io){
         console.log(error);
       })
     })
+
 
   })
 
