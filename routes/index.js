@@ -185,6 +185,9 @@ module.exports=function(io){
 
       var spotifyId = socketObj['id'];
 
+      var imageURL = socketObj['imageURL'];
+
+
       var spotifyApi = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
         clientSecret : process.env.SPOTIFY_SECRET,
@@ -198,6 +201,7 @@ module.exports=function(io){
           // Save the access token so that it's used in future calls
           spotifyApi.setAccessToken(data.body['access_token']);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
+          io.sockets.adapter.rooms[room].imageURL = imageURL;
         }, function(err) {
           console.log('Could not refresh access token', err);
         });
@@ -256,7 +260,7 @@ module.exports=function(io){
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
         socket.emit("DJSetting",{a: data.a, b: data.b});
-        socket.emit("roomInfo", {room:requestedRoom, djPhoto: })
+        socket.emit("roomInfo", {room:requestedRoom, djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL)})
       })
       .catch(function(error){
         console.log(error);

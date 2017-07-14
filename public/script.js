@@ -53,7 +53,7 @@ $(document).ready(function() {
     var room = $('#roomName').val();
     var id = localStorage.getItem('userObj').spotifyId;
     var imageURL= localStorage.getItem('userObj').imageURL;
-    var socketObj = {'room': room, 'id': id};
+    var socketObj = {'room': room, 'id': id , imageURL: imageURL };
     socket.emit('createRoom', socketObj);
     $.ajax({
       url: '/createRoom',
@@ -97,7 +97,7 @@ $(document).ready(function() {
     </div>
 
     <div>
-      Users: ${users}
+      Users: ${info.djPhoto}
     </div>
 
     </div>`;
