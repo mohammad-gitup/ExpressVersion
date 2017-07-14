@@ -74,7 +74,7 @@ $(document).ready(function() {
     socket.emit('getRooms');
   })
 
-  $('.joinexistingRoom').on('click',function(event){
+  $('.wrapper').on('click', '.joinexistingRoom', function(event){
     event.preventDefault();
     var roomName = $(this).attr("data-id");
     console.log("joining room" + roomName);
@@ -101,8 +101,25 @@ $(document).ready(function() {
       $('.wrapper').append(djRoom);
     })
 
-  socket.on('rooms', function(data){
+  socket.on('rooms', function(rooms){
     console.log(data);
+    var listofRooms = [];
+    for(var key in rooms){
+      if(rooms[key].hasOwnProperty('spotifyId')){
+        listofRooms.push(key);
+      }
+    }
+    $('.wrapper').empty();
+    $('.wrapper').append(`<h3>List of available rooms</h3>`);
+    $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
+
+    for(var i =0  ; i< listofRooms.length ;i++){
+      var roomItem = $(`<li>
+            <button type="button" class="joinexistingRoom" data-id='${key}'>${key}</button>
+                  </li>`);
+      $('#listofRooms').append(roomItem);
+    }
+
   })
 
 
