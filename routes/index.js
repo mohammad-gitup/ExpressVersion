@@ -218,11 +218,13 @@ module.exports = function (io) {
                         socket.join(room);
                         io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
                         io.sockets.adapter.rooms[room].imageURL = imageURL;
-
+                        io.sockets.adapter.rooms[room].djusername = user.username;
                         socket.emit('djRoomInfo', {
+                            djusername: user.username,
                             room: room,
                             djPhoto: io.sockets.adapter.rooms[room].imageURL
                         })
+                        io.emit('newRoomCreated', room);
                         //set listenrs array
                         io.sockets.adapter.rooms[room].listeners = [];
                         var x = setInterval(function () {
@@ -241,6 +243,7 @@ module.exports = function (io) {
         socket.on('joinRoom', function (requestedRoom, username, imageURL) {
             console.log("joining room", username);
             socket.emit("roomInfo", {
+                djusername: io.sockets.adapter.rooms[requestedRoom].djusername,
                 room: requestedRoom,
                 djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL,
                 listeners: io.sockets.adapter.rooms[requestedRoom].listeners
@@ -344,10 +347,11 @@ module.exports = function (io) {
                     .then(function () {
                         io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
                         io.sockets.adapter.rooms[room].imageURL = user.image;
+                        io.sockets.adapter.rooms[room].djusername = user.username;
                         console.log("*********", room, io.sockets.adapter.rooms[room].imageURL, io.sockets.adapter.rooms[room].listeners);
                         io.sockets.to(room)
                             .emit('newDjRoomInfo', {
-                                THEDJ: newDjUsername,
+                                djusername: newDjUsername,
                                 room: room,
                                 djPhoto: io.sockets.adapter.rooms[room].imageURL,
                                 listeners: io.sockets.adapter.rooms[room].listeners
@@ -364,7 +368,7 @@ module.exports = function (io) {
             socket.leave(room);
             socket.emit('djLeftRoom', room);
         })
-        
+
     })
     return router;
 }

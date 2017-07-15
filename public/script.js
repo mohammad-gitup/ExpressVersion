@@ -135,6 +135,13 @@ $(document).ready(function() {
         socket.emit('leaveRoomDj');
     })
 
+    socket.on('newRoomCreated', function(room){
+      var roomItem = $(`<h1 class="raise-room joinexistingRoom" data-id='${room}'>${room}</h1>`);
+      if($('#listofRooms')){
+        $('#listofRooms').append(roomItem);
+      }
+    })
+
     socket.on('roomInfo', function(roomInfo) {
         var users = `<div class="singleDot"> ... </div>`
         var djRoom = `<div>
