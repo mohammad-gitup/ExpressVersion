@@ -218,6 +218,7 @@ $(document).ready(function() {
     socket.on('userLeft', function(username) {
         console.log("reached here", username);
         $('.activeUsers').find(`[data-id='${username}']`).remove();
+        $('.activeUsersforUser').find(`[data-id='${username}']`).remove();
     });
 
     //FIX this select specific socket id
@@ -301,4 +302,6 @@ $(document).ready(function() {
         var imageURL = localStorage.getItem('imageURL');
         socket.emit('joinRoom', room, username, imageURL);
     })
+
+
 });
