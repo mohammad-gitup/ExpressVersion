@@ -12,6 +12,10 @@ a:hover {
   justify-content: center;
 }
 
+.right {
+  display: flex;
+}
+
 .text {
   color: white;
   font-family: Futura;
@@ -37,6 +41,10 @@ a:hover {
   font-size: 30px;
 }
 
+.small {
+  font-size: 20px;
+}
+
 .raise {
   box-shadow: 0 1px 2px #999;
   -moz-transition: box-shadow 0.25s;
@@ -60,6 +68,7 @@ a:hover {
   padding: 5px 30px 5px 30px;
   cursor: pointer;
 }
+
 
 .ghost-input {
   display: block;
@@ -89,9 +98,6 @@ a:hover {
   border-bottom:1px solid #ddd;
 }
 
-.room-list {
-
-}
 
 .raise-room {
   -moz-transition: box-shadow 0.25s;
