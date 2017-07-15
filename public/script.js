@@ -202,10 +202,35 @@ $(document).ready(function () {
                       <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
                     </div>
                   </div>
+                  <div class="center">
+	                     <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+                  </div>
+
+
+
+
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body lastSongs">
+
+      </div>
+      <div class="modal-footer">
+				<h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+      </div>
+    </div>
+  </div>
+        </div>
+
                   <ul class="activeUsersforUser">
                   </ul >
-                  <ul class="lastSongs">
-                  </ul >
+
               </div>`;
 
             $('.wrapper')
@@ -236,10 +261,33 @@ $(document).ready(function () {
                         <h2 class="text-center standard-text small">You are the host</h2>
                       </div>
                     </div>
+                    <div class="center">
+  	                     <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+                    </div>
+
+
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body lastSongs">
+
+                          </div>
+                          <div class="modal-footer">
+                    				<h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+                          </div>
+                        </div>
+                      </div>
+                            </div>
+
                     <ul class="activeUsers">
                     </ul>
-                    <ul class="lastSongs">
-                    </ul >
+
                   </div>`;
             $('.wrapper').empty();
             $('.wrapper').append(djRoom);
@@ -263,10 +311,31 @@ $(document).ready(function () {
                       <h2 class="text-center standard-text small">You are the host</h2>
                     </div>
                   </div>
+                  <div class="center">
+	                     <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+                  </div>
+
+                          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body lastSongs">
+
+                        </div>
+                        <div class="modal-footer">
+                  				<h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+                        </div>
+                      </div>
+                    </div>
+                          </div>
                   <ul class="activeUsers">
                   </ul>
-                  <ul class="lastSongs">
-                  </ul >
+
                 </div>`;
                 $('.wrapper').append(djRoom);
                 var users = info.listeners;
@@ -294,11 +363,32 @@ $(document).ready(function () {
                           </div>
                           <h2 class="text-center standard-text small">Hosted by: ${info.djusername}</h2>
                         </div>
+                        <div class="center">
+      	                     <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+                        </div>
                       </div>
+
+                              <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body lastSongs">
+
+                            </div>
+                            <div class="modal-footer">
+                      				<h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+                            </div>
+                          </div>
+                        </div>
+                              </div>
                   <ul class="activeUsersforUser">
                   </ul >
-                  <ul class="lastSongs">
-                  </ul >
+                  
                 </div>`;
                 $('.wrapper').append(djRoom);
                 var users = info.listeners;
