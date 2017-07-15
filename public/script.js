@@ -142,7 +142,6 @@ $('.wrapper').on('click', '.leaveRoom', function(event) {
 
   socket.on('roomInfo', function(roomInfo) {
     var users = `<div class="singleDot"> ... </div>`
-
     var djRoom = `<div>
     <div class="row">
       <div class="col-sm-3">
@@ -156,15 +155,35 @@ $('.wrapper').on('click', '.leaveRoom', function(event) {
           <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
         </div>
       </div>
+      <div class="center">
+        <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+      </div>
 
 
       <ul class="activeUsersforUser">
 
       </ul >
 
-      <ul class="lastSongs">
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body lastSongs">
 
-      </ul >
+
+            </div>
+            <div class="modal-footer">
+              <h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     </div>`;
 
@@ -224,13 +243,38 @@ $('.wrapper').on('click', '.leaveRoom', function(event) {
               <div id="djphoto" class='center'>
                 <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
                 </div>
-                <h2 class="text-center standard-text small">You are the host</h2>
+                <h2 class="text-center standard-text small">You are the DJ</h2>
               </div>
             </div>
+            <div class="center">
+              <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+            </div>
+
+
             <ul class="activeUsers">
             </ul>
-            <ul class="lastSongs">
-            </ul >
+
+
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body lastSongs">
+
+
+                  </div>
+                  <div class="modal-footer">
+                    <h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>`;
           $('.wrapper').empty();
           $('.wrapper').append(djRoom);
@@ -243,12 +287,68 @@ $('.wrapper').on('click', '.leaveRoom', function(event) {
         });
 
 
-          //FIX this select specific socket id
-          socket.on('newDjRoomInfo', function(info) {
-            if (info.djusername === localStorage.getItem('username')) {
-              $('.wrapper').empty();
-              var djRoom = `
-              <div>
+        //FIX this select specific socket id
+        socket.on('newDjRoomInfo', function(info) {
+          if (info.djusername === localStorage.getItem('username')) {
+            $('.wrapper').empty();
+            var djRoom = `
+            <div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
+                </div>
+                <div class="col-sm-6">
+                  <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
+                  <div id="djphoto" class='center'>
+                    <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+                    </div>
+                    <h2 class="text-center standard-text small">You are the DJ</h2>
+                  </div>
+                </div>
+                <div class="center">
+                  <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+                </div>
+
+
+                <ul class="activeUsers">
+                </ul>
+
+
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body lastSongs">
+
+
+                      </div>
+                      <div class="modal-footer">
+                        <h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>`;
+              $('.wrapper').append(djRoom);
+              var users = info.listeners;
+              for (var i = 0; i < users.length; i++) {
+                var userObj = users[i];
+                $('.activeUsers').append(`
+                  <li data-id="${userObj.username}">
+                    | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
+                  </li>`);
+                }
+              }
+              else{
+
+                var djRoom = `<div>
+
                 <div class="row">
                   <div class="col-sm-3">
                     <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
@@ -261,45 +361,35 @@ $('.wrapper').on('click', '.leaveRoom', function(event) {
                       <h2 class="text-center standard-text small">You are the host</h2>
                     </div>
                   </div>
-                  <ul class="activeUsers">
-                  </ul>
-                  <ul class="lastSongs">
-                  </ul >
-                </div>`;
-                $('.wrapper').append(djRoom);
-                var users = info.listeners;
-                for (var i = 0; i < users.length; i++) {
-                  var userObj = users[i];
-                  $('.activeUsers').append(`
-                    <li data-id="${userObj.username}">
-                      | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                    </li>`);
-                  }
-                }
-                else{
-                  
-                  var djRoom = `<div>
+                  <div class="center">
+                    <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+                  </div>
 
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
-                      </div>
-                      <div class="col-sm-6">
-                        <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
-                        <div id="djphoto" class='center'>
-                          <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
-                          </div>
-                          <h2 class="text-center standard-text small">You are the host</h2>
-                        </div>
-                      </div>
 
                   <ul class="activeUsersforUser">
-
                   </ul >
 
-                  <ul class="lastSongs">
 
-                  </ul >
+                  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body lastSongs">
+
+
+                        </div>
+                        <div class="modal-footer">
+                          <h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>`;
 
                 $('.wrapper').empty();
@@ -353,7 +443,9 @@ $('.wrapper').on('click', '.leaveRoom', function(event) {
                         //length of lasts songs, if we want more than 5 we can change the info here
                         for (var i = lastSong.length; i > lastSong.length - 6; i--) {
                           if (lastSong[i]) {
-                            $('.lastSongs').append(`<li> ${lastSong[i]} </li>`);
+                            $('.lastSongs').append(`<span style="color: black;" class="raise-room text">${lastSong[i]}</span>`);
+
+
                           }
                         }
                       });
