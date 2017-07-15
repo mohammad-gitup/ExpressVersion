@@ -226,7 +226,7 @@ module.exports=function(io){
 
           var x= setInterval(function(){
             if(io.sockets.adapter.rooms[room].DJToken!==0){
-              return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}
+              return getDJData(io.sockets.adapter.rooms[room].DJToken, room);
             }else{
               clearInterval(x);
             }, 5000);
