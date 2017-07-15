@@ -21,7 +21,7 @@ $(document).ready(function() {
   socket.on('DJSetting', function(data) {
 
     console.log("reaching dj setting");
-    var songProgress = data.a;
+    var songProgress = data.a + 150;
     var songURI = data.b;
     //ajax call will be done here
     $.ajax({
