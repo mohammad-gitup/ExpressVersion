@@ -320,6 +320,7 @@ module.exports=function(io){
 
     socket.on('leaveRoom',function(roomName){
       socket.leave(roomName);
+      io.sockets.to(roomName).emit('userLeft', username);
     })
 
     socket.on('newDj', function(newDjUsername){

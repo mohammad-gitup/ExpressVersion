@@ -98,7 +98,9 @@ $(document).ready(function() {
   $('.wrapper').on('click', '.leaveRoom', function(event){
     event.preventDefault();
     var roomName = $(this).attr("data-id");
-    socket.emit('leaveRoom', roomName);
+    var username = localStorage.getItem('username');
+    socket.emit('leaveRoom', {roomName:roomName, username: username );
+
     var home = `<div class="container-fluid" >
     <div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
       <a class="topLevel text" id="createRoom" ><span class="text-center raise boxed headertext text">Create</span></a>
@@ -124,7 +126,7 @@ $(document).ready(function() {
   })
 
 
-    socket.on('roomInfo', function(roomInfo) {
+  socket.on('roomInfo', function(roomInfo) {
       var users = `<div class="singleDot"> ... </div>`
       var djRoom=`<div>
       <div>
@@ -145,15 +147,15 @@ $(document).ready(function() {
       <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
         </div>`;
 
-    $('.wrapper').empty();
-    $('.wrapper').append(djRoom);
-    var users = roomInfo.listeners;
-    for(var i=0 ;i<users.length; i++){
-      var userObj = users[i];
-      $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
-    }
+      $('.wrapper').empty();
+      $('.wrapper').append(djRoom);
+      var users = roomInfo.listeners;
+      for(var i=0 ;i<users.length; i++){
+        var userObj = users[i];
+        $('.activeUsersforUser').append(`<li data-id="${userObj.username}"> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+      }
 
-  })
+    })
 
   socket.on('rooms', function(rooms){
     console.log(rooms);
@@ -212,6 +214,12 @@ $(document).ready(function() {
     $('.wrapper').append(djRoom);
   })
 
+  socket.on('userLeft', function(data){
+    $(`ul li[data-id=${data.username}]`).remove();
+  })
+
+
+  //FIX this select specific socket id
   socket.on('newDjRoomInfo', function(info){
     if(info.THEDJ === localStorage.getItem('username')){
       console.log("lsudfhasuhfbckusdhvgks ousdvbykdvuydxgjygkusycfst");
@@ -241,7 +249,7 @@ $(document).ready(function() {
       var users = info.listeners;
       for(var i=0 ;i<users.length; i++){
         var userObj = users[i];
-        $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> </li>`);
+        $('.activeUsers').append(`<li data-id="${userObj.username}"> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> </li>`);
       }
     }
 
@@ -268,8 +276,8 @@ $(document).ready(function() {
 
     socket.on('newUserJoined', function(userObj){
       console.log("newuserjoined", userObj.username);
-      $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
-      $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+      $('.activeUsers').append(`<li data-id="${userObj.username}"> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
+      $('.activeUsersforUser').append(`<li data-id="${userObj.username}"> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
     })
 
     socket.on('lastSongsChanged', function(lastSong){
