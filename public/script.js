@@ -140,7 +140,7 @@ $(document).ready(function() {
             Dj Photo: <img src="${roomInfo.djPhoto}" style="width:304px;height:228px;">
           </div>
 
-          <ul class="activeUsersfoUser">
+          <ul class="activeUsersforUser">
 
           </ul >
           <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
@@ -148,7 +148,7 @@ $(document).ready(function() {
     var users = roomInfo.listeners;
     for(var i=0 ;i<users.length; i++){
       var userObj = users[i];
-      $('.activeUsers').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+      $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
     }
 
       $('.wrapper').empty();
@@ -227,8 +227,6 @@ $(document).ready(function() {
     console.log("newuserjoined", userObj.username);
     $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
     $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
-
-
   })
 
 });
