@@ -153,7 +153,7 @@ module.exports=function(io){
             io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
 
             // major change made here in case stuff goes wrong
-            io.sockets.broadcast.in(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+            io.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
             io.sockets.adapter.rooms[room].lastSongs = [data.body.item.name];
 
@@ -170,11 +170,11 @@ module.exports=function(io){
               io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
 
               //change made here
-              io.sockets.broadcast.in(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+              io.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
               io.sockets.adapter.rooms[room].lastSongs.push(data.body.item.name);
               console.log("lasts songs are",io.sockets.adapter.rooms[room].lastSongs)
-              io.sockets.broadcast.in(room).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
+              io.to(room).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
               //socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
             }
@@ -257,13 +257,6 @@ module.exports=function(io){
 
       console.log("joining room", username);
 
-      var roomInfo = {};
-      roomInfo.room = requestedRoom;
-      roomInfo.djPhoto = imageURL;
-      roomInfo.listeners = io.sockets.adapter.rooms[requestedRoom].listeners;
-
-      console.log(roomInfo.listeners);
-
       socket.emit("roomInfo", {room:requestedRoom,
         djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL,
         listeners: io.sockets.adapter.rooms[requestedRoom].listeners})
@@ -335,6 +328,14 @@ module.exports=function(io){
 
       console.log("came here for newDj", newDjUsername);
 
+      var array = io.sockets.adapter.rooms[room].listeners;
+      for(var i=0;i<array.length;i++){
+        if(array[i].username===newDjUsername){
+          array.slice(i,1);
+        }
+      }
+      io.sockets.adapter.rooms[room].listeners = array; 
+
       var spotifyApi2 = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
         clientSecret : process.env.SPOTIFY_SECRET,
@@ -353,13 +354,21 @@ module.exports=function(io){
           console.log("second success");
           io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = user.imageURL;
-          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[room].imageURL});
+          socket.emit('newDjRoomInfo', {room: room,
+            djPhoto: io.sockets.adapter.rooms[room].imageURL,
+          listeners: io.sockets.adapter.rooms[room].listeners});
           console.log("fuck you");
         })
         .catch(function(error){
           console.log(error);
         })
       })
+    })
+
+    socket.on('leaveRoomDj', function(){
+      var room = socket.room;
+      socket.leave(room);
+      socket.emit('djLeftRoom', room);
     })
 
   })

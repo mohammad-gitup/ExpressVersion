@@ -120,17 +120,11 @@ $(document).ready(function() {
       var newDjUsername = $(this).attr('data-id');
       console.log("new dj name", newDjUsername);
       socket.emit('newDj', newDjUsername);
-      
+      socket.emit('leaveRoomDj');
   })
 
-  socket.on('updatePageNewDj', function(obj){
-    var imageURL = obj.djPhoto;
-    $('#djphoto').empty();
-    $('#djphoto').append(`Dj Photo: <img src="${imageURL}" style="width:304px;height:228px;">`);
-  })
 
   socket.on('roomInfo', function(roomInfo) {
-    console.log("roomIN]", roomInfo);
     var users = `<div class="singleDot"> ... </div>`
     var djRoom=`<div>
           <div>
@@ -149,8 +143,7 @@ $(document).ready(function() {
 
           </ul >
           <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
-          </div>`;
-
+      </div>`;
 
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
@@ -159,7 +152,8 @@ $(document).ready(function() {
         var userObj = users[i];
         $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
       }
-    })
+
+  })
 
   socket.on('rooms', function(rooms){
     console.log(rooms);
@@ -214,6 +208,36 @@ $(document).ready(function() {
 
   });
 
+  socket.on('newDjRoomInfo', function(info){
+    var djRoom=`<div>
+    <div>
+      Room Name ${info.room}
+    </div>
+
+    <div>
+      Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
+    </div>
+
+    <ul class="activeUsers">
+
+    </ul>
+
+    <ul class="lastSongs">
+
+    </ul >
+
+    <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
+  </div>`;
+  $('.wrapper').empty();
+  $('.wrapper').append(djRoom);
+  var users = info.listeners;
+  for(var i=0 ;i<users.length; i++){
+    var userObj = users[i];
+    $('.activeUsers').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+  }
+
+  })
+
   socket.on('disconnectFromRoom', function(roomName) {
     socket.emit('leaveRoom', roomName);
     var home = `<div class="container-fluid" >
@@ -249,6 +273,12 @@ $(document).ready(function() {
       }
     }
 
+  })
+
+  socket.on('djLeftRoom', function(room){
+    var username = localStorage.getItem('username');
+    var imageURL = localStorage.getItem('imageURL');
+    socket.emit('joinRoom', room, username, imageURL);
   })
 
 });
