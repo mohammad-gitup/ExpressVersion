@@ -236,7 +236,7 @@ module.exports=function(io){
 
     })
 
-    socket.on('joinRoom', function(requestedRoom, username){
+    socket.on('joinRoom', function(requestedRoom, username, imageURL){
 
       console.log("joining room", username);
       socket.emit("roomInfo", {room:requestedRoom,

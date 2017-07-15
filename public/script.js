@@ -84,8 +84,9 @@ $(document).ready(function() {
     event.preventDefault();
     var roomName = $(this).attr("data-id");
     var username = localStorage.getItem('username');
+    var imageURL = localStorage.getItem('imageURL');
     console.log("joining room" + roomName);
-    socket.emit('joinRoom', roomName, username);
+    socket.emit('joinRoom', roomName, username, imageURL);
   });
 
   $('.wrapper').on('click', '.closeRoom', function(event){
