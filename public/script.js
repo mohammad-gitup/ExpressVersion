@@ -163,7 +163,7 @@ $('.wrapper').on('click', '.leaveRoom', function(event){
         listofRooms.push(key);
       }
     }
-  }
+  })
 
 
   console.log(listofRooms);
