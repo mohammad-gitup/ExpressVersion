@@ -52,9 +52,15 @@ $(document).ready(function() {
     $('.wrapper').empty();
     var createTemplate = $(
       `<div class="main">
-        <input type="text" name="roomNameBar" id="roomName"> </br>
-        <button type="submit" name="button" id="startRoom"> Submit </button>
-      </div>`
+      <div class="container-fluid">
+        <div class="center topLevel" style="width: 60%; margin-right: auto; margin-left: auto;">
+          <input name="roomNameBar" id="roomName" placeholder="Enter a room name here" class="ghost-input text-center"></input>
+        </div>
+        <div class="center" >
+          <h1 class="text-center text label-text boxed raise" name="button" id="startRoom">Go Live</h1>
+        </div>
+      </div>
+    </div>`
     )
     $('.wrapper').append(createTemplate);
   })
