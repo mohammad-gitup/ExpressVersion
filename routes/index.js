@@ -163,13 +163,13 @@ module.exports=function(io){
               console.log("song changed altogether");
               io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
               io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
-              socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+              io.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
             }
             else {
               if(data.body.is_playing){
                 if(Math.abs(data.body.progress_ms - io.sockets.adapter.rooms[room].timeProgress) > 20000 ){
                   console.log("****same song but change in time*****");
-                  socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+                  io.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
                 }
                 io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
               }
