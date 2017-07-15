@@ -331,10 +331,10 @@ module.exports=function(io){
       var array = io.sockets.adapter.rooms[room].listeners;
       for(var i=0;i<array.length;i++){
         if(array[i].username===newDjUsername){
-          array.slice(i,1);
+          array.splice(i,1);
         }
       }
-      io.sockets.adapter.rooms[room].listeners = array; 
+      io.sockets.adapter.rooms[room].listeners = array;
 
       var spotifyApi2 = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
@@ -353,7 +353,7 @@ module.exports=function(io){
         .then(function(){
           console.log("second success");
           io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
-          io.sockets.adapter.rooms[room].imageURL = user.imageURL;
+          io.sockets.adapter.rooms[room].imageURL = user.image;
           socket.emit('newDjRoomInfo', {room: room,
             djPhoto: io.sockets.adapter.rooms[room].imageURL,
           listeners: io.sockets.adapter.rooms[room].listeners});
