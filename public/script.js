@@ -122,11 +122,11 @@ $(document).ready(function() {
       socket.emit('newDj', newDjUsername);
   })
 
-  socket.on('updatePageNewDj', obj){
+  socket.on('updatePageNewDj', function(obj){
     var imageURL = obj.djPhoto;
     $('#djphoto').empty();
     $('#djphoto').append(`Dj Photo: <img src="${imageURL}" style="width:304px;height:228px;">`);
-  }
+  })
 
   socket.on('roomInfo', function(roomInfo) {
     var users = `<div class="singleDot"> ... </div>`
