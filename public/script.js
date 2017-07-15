@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    //final versions
+
     var socket = io();
     //first connect
     socket.on('connect', function() {
@@ -142,7 +144,7 @@ $(document).ready(function() {
       </div>
 
       <div id="djphoto">
-        Dj Photo: <img src="${roomInfo.djPhoto}" style="width:304px;height:228px;">
+        Dj Photo: <img id="djphoto" src="${roomInfo.djPhoto}" style="width:304px;height:228px;">
       </div>
 
       <ul class="activeUsersforUser">
@@ -204,7 +206,7 @@ $(document).ready(function() {
               Room Name ${info.room}
             </div>
             <div>
-              Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
+              Dj Photo: <img  src="${info.djPhoto}" style="width:304px;height:228px;">
             </div>
             <ul class="activeUsers">
             </ul>
@@ -219,6 +221,7 @@ $(document).ready(function() {
     socket.on('userLeft', function(username) {
         console.log("reached here", username);
         $('.activeUsers').find(`[data-id='${username}']`).remove();
+        $('.activeUsersforUser').find(`[data-id='${username}']`).remove();
     });
 
     //FIX this select specific socket id
@@ -247,6 +250,34 @@ $(document).ready(function() {
                   <li data-id="${userObj.username}">
                     | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
                   </li>`);
+            }
+        }
+        else{
+            var djRoom = `<div>
+              <div>
+                Room Name ${info.room}
+              </div>
+
+              <div id="djphoto">
+                Dj Photo: <img id="djphoto" src="${info.djPhoto}" style="width:304px;height:228px;">
+              </div>
+
+              <ul class="activeUsersforUser">
+
+              </ul >
+
+              <ul class="lastSongs">
+
+              </ul >
+              <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
+                </div>`;
+
+            $('.wrapper').empty();
+            $('.wrapper').append(djRoom);
+            var users = info.listeners;
+            for (var i = 0; i < users.length; i++) {
+                var userObj = users[i];
+                $('.activeUsersforUser').append(`<li data-id="${userObj.username}"> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
             }
         }
     });
@@ -302,4 +333,6 @@ $(document).ready(function() {
         var imageURL = localStorage.getItem('imageURL');
         socket.emit('joinRoom', room, username, imageURL);
     })
+
+
 });

@@ -238,7 +238,6 @@ module.exports = function (io) {
             })
         })
 
-        //fixed
         socket.on('joinRoom', function (requestedRoom, username, imageURL) {
             console.log("joining room", username);
             socket.emit("roomInfo", {
@@ -291,17 +290,20 @@ module.exports = function (io) {
                     console.log(error);
                 })
         })
+
         socket.on('getRooms', function () {
             console.log("reached getRooms");
             console.log(io.sockets.adapter.rooms);
             socket.emit('rooms', io.sockets.adapter.rooms);
         })
+
         socket.on('djCloseRoom', function (roomName) {
             console.log("Dj close room", roomName);
             io.to(roomName)
                 .emit("disconnectFromRoom", roomName);
 
         })
+
         socket.on('leaveRoom', function (obj) {
             socket.leave(obj.roomName);
             io.sockets.to(obj.roomName)
@@ -314,6 +316,7 @@ module.exports = function (io) {
             }
             io.sockets.adapter.rooms[obj.roomName].listeners = array;
         })
+
         socket.on('newDj', function (newDjUsername) {
             var room = socket.room;
             console.log("came here for newDj", newDjUsername);
@@ -355,11 +358,13 @@ module.exports = function (io) {
                     })
             })
         })
+
         socket.on('leaveRoomDj', function () {
             var room = socket.room;
             socket.leave(room);
             socket.emit('djLeftRoom', room);
         })
+        
     })
     return router;
 }
