@@ -130,11 +130,11 @@ module.exports = function (io) {
                     redirectUri: process.env.CALLBACK_URL
                 });
                 DJSpotifyApi.setAccessToken(DJAccessToken);
-                  //var startTime = Date.now();
+                  var startTime = Date.now();
                 DJSpotifyApi.getMyCurrentPlaybackState()
                     .then(function (data) {
-                         //var timeDiff=Date.now() - startTime ;
-                          //console.log("time Diff", timeDiff)
+                         var timeDiff=Date.now() - startTime ;
+                          console.log("time Diff", timeDiff)
                         if (!io.sockets.adapter.rooms[room].songURI) {
                             console.log("****FIRST TIME IT SHOULD ENTER HERE****");
                             console.log(data);
