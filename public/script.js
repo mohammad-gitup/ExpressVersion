@@ -77,8 +77,9 @@ $(document).ready(function() {
   $('.wrapper').on('click', '.joinexistingRoom', function(event){
     event.preventDefault();
     var roomName = $(this).attr("data-id");
+    var username = localStorage.getItem('username');
     console.log("joining room" + roomName);
-    socket.emit('joinRoom', roomName);
+    socket.emit('joinRoom', roomName, username);
   });
 
   socket.on('roomInfo', function(info) {
@@ -148,9 +149,8 @@ $(document).ready(function() {
         $('.wrapper').append(djRoom);
       })
 
-  $('#closeRoom').on('click',function(){
-    var id=$(this).attr('data-id');
+  socket.on('newUserJoined', function(username){
+    $('.activeUsers').append(`<span> | ${username} | </span>`);
   })
-
 
 });

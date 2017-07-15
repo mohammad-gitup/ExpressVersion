@@ -25,7 +25,8 @@ module.exports=function(io){
     console.log(req.user);
     res.render('main',{
       spotifyId:req.user.spotifyId,
-      imageURL: req.user.image
+      imageURL: req.user.image,
+      username: req.user.username
     });
   });
 
@@ -219,13 +220,14 @@ module.exports=function(io){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = imageURL;
+          io.sockets.adapter.rooms[room].listeners = [];
           setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
         })
       })
 
     })
 
-    socket.on('joinRoom', function(requestedRoom){
+    socket.on('joinRoom', function(requestedRoom, username){
 
       console.log("joining room");
       socket.emit("roomInfo", {room:requestedRoom, djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
@@ -260,6 +262,8 @@ module.exports=function(io){
       }
       socket.room = requestedRoom;
       socket.join(requestedRoom);
+      io.sockets.adapter.rooms[requestedRoom].listeners.push(username); //add user to room
+      socket.broadcast.to(requestedRoom).emit('newUserJoined',username);
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
         socket.emit("DJSetting",{a: data.a, b: data.b});
