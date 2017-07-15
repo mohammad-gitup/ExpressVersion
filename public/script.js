@@ -116,7 +116,7 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   })
 
-  $('.wrapper').on('click', 'passDJ', function(event){
+  $('.wrapper').on('click', '.passDJ', function(event){
       var newDjUsername = $(this).attr('data-id');
       console.log("new dj name", newDjUsername);
       socket.emit('newDj', newDjUsername);
