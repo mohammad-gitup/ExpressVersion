@@ -215,7 +215,7 @@ $(document).ready(function() {
   })
 
   socket.on('userLeft', function(username){
-    console.log("reached here");
+    console.log("reached here", username);
     $(`ul li[data-id=${username}]`).remove();
   })
 
