@@ -1,0 +1,50 @@
+body {
+  background-color: #1E1D1D;
+  overflow: hidden;
+}
+
+a:hover {
+  text-decoration:none;
+}
+
+.text {
+	color: white;
+	font-family: Futura;
+  display: flex;
+  justify-content: center;
+}
+
+.headertext {
+	font-size: 55px;
+}
+
+.middle {
+	font-size: 25px;
+	margin-bottom: 25px;
+}
+
+.raise {
+  box-shadow: 0 1px 2px #999;
+  -moz-transition: box-shadow 0.25s;
+  -o-transition: box-shadow 0.25s;
+  -webkit-transition: box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+}
+
+.raise:hover {
+  box-shadow: 0 1px 20px #999;
+}
+
+
+
+.topLevel {
+  margin-top: 10%;
+}
+
+.boxed {
+  border: 1px solid white;
+  border-radius: 10px;
+  width: inherit;
+  padding: 5px 30px 5px 30px;
+  cursor: pointer;
+}
