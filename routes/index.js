@@ -228,6 +228,7 @@ module.exports=function(io){
             if(io.sockets.adapter.rooms[room]){
               return getDJData(io.sockets.adapter.rooms[room].DJToken, room);
             }else{
+              console.log("room gone");
               clearInterval(x);
             }}, 5000);
           // io.sockets.adapter.rooms[room].clearVar = clearVar ;
