@@ -210,7 +210,7 @@ socket.on('djRoomInfo', function(info) {
   </div>`;
   $('.wrapper').empty();
   $('.wrapper').append(djRoom);
-}
+})
 
 socket.on('newDjRoomInfo', function(info){
   var djRoom=`<div>
