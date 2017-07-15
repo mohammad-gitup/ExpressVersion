@@ -221,6 +221,7 @@ module.exports=function(io){
 
           socket.emit('djRoomInfo', {room:room, djPhoto: io.sockets.adapter.rooms[room].imageURL})
           io.sockets.adapter.rooms[room].listeners = [];
+          console.log("set listeners array", io.sockets.adapter.rooms[room].listeners);
 
           var x= setInterval(function(){
             if(io.sockets.adapter.rooms[room]){
@@ -238,6 +239,14 @@ module.exports=function(io){
     socket.on('joinRoom', function(requestedRoom, username, imageURL){
 
       console.log("joining room", username);
+
+      var roomInfo = {};
+      roomInfo.room = requestedRoom;
+      roomInfo.djPhoto = imageURL;
+      roomInfo.listeners = io.sockets.adapter.rooms[requestedRoom].listeners;
+
+      console.log(roomInfo.listeners);
+
       socket.emit("roomInfo", {room:requestedRoom,
         djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL,
         listeners: io.sockets.adapter.rooms[requestedRoom].listeners})
