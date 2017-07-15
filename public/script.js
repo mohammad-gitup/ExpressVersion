@@ -347,7 +347,7 @@ $(document).ready(function () {
                     $('.activeUsers').append(
                       `<div data-id="${userObj.username}" class="center">
 		<div class="passDJ" data-id="${userObj.username}">
-      <img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+      <img class="grow raise" style="border-radius: 50%; width: 100%; height: 100%; margin: 1%;" src="${userObj.imageURL}" alt="">
     </div>
 	</div>`);
                 }
@@ -433,7 +433,7 @@ $(document).ready(function () {
                 $('.activeUsers').append(
                   `<div data-id="${userObj.username}" class="center">
                   <div class="passDJ" data-id="${userObj.username}">
-                    <img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+                    <img class="grow raise" style="border-radius: 50%; width: 100%; height: 100%; margin: 1%;" src="${userObj.imageURL}" alt="">
                   </div>
 	</div>`);
               }
