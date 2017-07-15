@@ -355,7 +355,7 @@ module.exports=function(io){
           io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = user.image;
           console.log("*********", room, io.sockets.adapter.rooms[room].imageURL, io.sockets.adapter.rooms[room].listeners );
-          socket.emit('newDjRoomInfo', {room: room,
+          io.sockets.to(room).emit('newDjRoomInfo', {THEDJ:newDjUsername,room: room,
             djPhoto: io.sockets.adapter.rooms[room].imageURL,
           listeners: io.sockets.adapter.rooms[room].listeners});
           console.log("fuck you");

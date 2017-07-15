@@ -213,34 +213,36 @@ $(document).ready(function() {
   })
 
   socket.on('newDjRoomInfo', function(info){
-    console.log("lsudfhasuhfbckusdhvgks ousdvbykdvuydxgjygkusycfst");
-    console.log(info);
-    $('.wrapper').empty();
-    var djRoom=`<div>
-    <div>
-      Room Name ${info.room}
-    </div>
+    if(info.THEDJ === localStorage.getItem('username')){
+      console.log("lsudfhasuhfbckusdhvgks ousdvbykdvuydxgjygkusycfst");
+      console.log(info);
+      $('.wrapper').empty();
+      var djRoom=`<div>
+      <div>
+        Room Name ${info.room}
+      </div>
 
-    <div>
-      Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
-    </div>
+      <div>
+        Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
+      </div>
 
-    <ul class="activeUsers">
+      <ul class="activeUsers">
 
-    </ul>
+      </ul>
 
-    <ul class="lastSongs">
+      <ul class="lastSongs">
 
-    </ul >
+      </ul >
 
-    <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
-    </div>`;
+      <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
+      </div>`;
 
-    $('.wrapper').append(djRoom);
-    var users = info.listeners;
-    for(var i=0 ;i<users.length; i++){
-      var userObj = users[i];
-      $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> </li>`);
+      $('.wrapper').append(djRoom);
+      var users = info.listeners;
+      for(var i=0 ;i<users.length; i++){
+        var userObj = users[i];
+        $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> </li>`);
+      }
     }
 
   })
