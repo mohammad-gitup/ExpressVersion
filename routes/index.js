@@ -351,6 +351,7 @@ module.exports=function(io){
         })
         .then(function(){
           console.log("second success");
+
           io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = user.imageURL;
           socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[room].imageURL});
