@@ -272,7 +272,7 @@ module.exports=function(io){
       socket.room = requestedRoom;
       socket.join(requestedRoom);
       io.sockets.adapter.rooms[requestedRoom].listeners.push(username); //add user to room
-      io.to(requestedRoom).emit('newUserJoined',username);
+      io.to(requestedRoom).emit('newUserJoined', username);
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
         socket.emit("DJSetting",{a: data.a, b: data.b});

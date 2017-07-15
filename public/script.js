@@ -21,7 +21,7 @@ $(document).ready(function() {
   socket.on('DJSetting', function(data) {
 
     console.log("reaching dj setting");
-    var songProgress = data.a + 50;
+    var songProgress = data.a ;
     var songURI = data.b;
     //ajax call will be done here
     $.ajax({
@@ -126,9 +126,9 @@ $(document).ready(function() {
       Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
     </div>
 
-    <div class="activeUsers">
-      Users:
-    </div >
+    <ul class="activeUsers">
+
+    </ul >
     <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
     </div>`;
       $('.wrapper').empty();
@@ -173,9 +173,9 @@ $(document).ready(function() {
         Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
       </div>
 
-      <div class="activeUsers">
-        users:
-      </div>
+      <ul class="activeUsers">
+
+      </ul>
       <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
     </div>`;
     $('.wrapper').empty();
@@ -204,7 +204,7 @@ $(document).ready(function() {
 
   socket.on('newUserJoined', function(username){
     console.log("newuserjoined", username);
-    $('.activeUsers').append(`<span> | ${username} | </span>`);
+    $('.activeUsers').append(`<li> | ${username} | </li>`);
   })
 
 });
