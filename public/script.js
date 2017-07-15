@@ -48,7 +48,7 @@ $(document).ready(function() {
     })
   })
 
-  $('#createRoom').on('click' ,function(event) {
+  $('.wrapper').on('click' , '#createRoom ',function(event) {
     $('.wrapper').empty();
     var createTemplate = $(
       `<div class="main">
@@ -68,7 +68,7 @@ $(document).ready(function() {
     socket.emit('startRoom', socketObj);
   })
 
-  $('#joinRoom').on('click', function(event){
+  $('.wrapper').on('click', '#joinRoom', function(event){
     event.preventDefault();
     console.log("reached jquery.");
     socket.emit('getRooms');
@@ -105,8 +105,8 @@ $(document).ready(function() {
     			<a class="text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
     		</div>
     </div>`;
-  $('.wrapper').empty();
-  $('.wrapper').append(home);
+    $('.wrapper').empty();
+    $('.wrapper').append(home);
   })
 
   socket.on('roomInfo', function(info) {
@@ -180,20 +180,20 @@ $(document).ready(function() {
   socket.on('disconnectFromRoom', function(roomName) {
     socket.emit('leaveRoom', roomName);
     var home = `<div class="container-fluid" >
-    	<div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
-    		<a class="topLevel text" id="createRoom" ><span class="text-center raise boxed headertext text">Create</span></a>
-    		<img src="/static/images/leftaux.svg" class="img-responsive" style="position: sticky; margin-top: 10%;">
-    	</div>
-    		<br><br>
-    	<h2 class="text middle">OR</h2>
-    		<br><br>
-    		<div style="display: flex; justify-content: center; margin-right: 50%; margin-left: auto;">
-    			<img style="position: sticky;" class="img-responsive text" src="/static/images/rightaux.svg" alt="">
-    			<a class="text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
-    		</div>
-    </div>`;
-  $('.wrapper').empty();
-  $('.wrapper').append(home);
+        	<div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
+        		<a class="topLevel text" id="createRoom" ><span class="text-center raise boxed headertext text">Create</span></a>
+        		<img src="/static/images/leftaux.svg" class="img-responsive" style="position: sticky; margin-top: 10%;">
+        	</div>
+        		<br><br>
+        	<h2 class="text middle">OR</h2>
+        		<br><br>
+        		<div style="display: flex; justify-content: center; margin-right: 50%; margin-left: auto;">
+        			<img style="position: sticky;" class="img-responsive text" src="/static/images/rightaux.svg" alt="">
+        			<a class="text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
+        		</div>
+        </div>`;
+    $('.wrapper').empty();
+    $('.wrapper').append(home);
 });
 
 
