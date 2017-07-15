@@ -22,7 +22,6 @@ module.exports=function(io){
   //home which renders two buttons
 
   router.get('/', function(req, res, next) {
-    console.log("AAAAAAAAAAAAA",req.user);
     res.render('main',{
       spotifyId:req.user.spotifyId,
       imageURL: req.user.image,
