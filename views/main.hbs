@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="wrapper">
+    <button type="button" id="createRoom" class="btn btn-primary">
+        Create Room
+    </button>
+    <button type="button" id="joinRoom" class="btn btn-primary">
+      Join Room
+    </button>
+    <button type="button" class="btn btn-primary">
+      <a href='/logout'>Logout<a>
+    </button>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script>
+  $(document).ready(function() {
+    var spotifyId = '{{spotifyId}}';
+    var imageURL = '{{imageURL}}'
+    localStorage.setItem("spotifyId", spotifyId);
+    localStorage.setItem("imageURL", imageURL);
+  })
+</script>
+<script src="/static/script.js"></script>

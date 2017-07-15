@@ -1,13 +1,19 @@
 <button type="button" id="startRoom" class="btn btn-primary">
-    <a href="/createRoom">Start Room</a>
+    Start Room
 </button>
 <button type="button" id="joinRoom" class="btn btn-primary">
-  <a href="/rooms">Join Room</a>
+  Join Room
 </button>
+<button type="button" class="btn btn-primary">
+  Logout
+</button>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 <script>
-  var id = '{{ id }}';
-  localStorage.setItem("spotifyId", id);
+  $(document).ready(function() {
+    var id = '{{ id }}';
+    localStorage.setItem("spotifyId", id);
+  })
 </script>
-<script src="../script.js"></script>
+<script src="/static/script.js"></script>
