@@ -89,11 +89,11 @@ $(document).ready(function() {
     </div>
 
     <div>
-      Dj Photo:
+      Dj Photo: <img src="${info.djPhoto}" alt="Mountain View" style="width:304px;height:228px;">
     </div>
 
     <div>
-      Users: ${info.djPhoto}
+      Users:
     </div>
     <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
     </div>`;
