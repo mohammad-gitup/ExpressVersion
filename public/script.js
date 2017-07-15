@@ -69,17 +69,17 @@ $(document).ready(function() {
   })
 
   $('#joinRoom').on('click', function(event){
-  event.preventDefault();
-  console.log("reached jquery.");
-  socket.emit('getRooms');
-})
+    event.preventDefault();
+    console.log("reached jquery.");
+    socket.emit('getRooms');
+  })
 
-  $('.joinexistingRoom').on('click',function(event){
-  event.preventDefault();
-  var roomName = $(this).attr("data-id");
-  console.log("joining room" + roomName);
-  socket.emit('joinRoom', roomName);
-});
+  $('.wrapper').on('click', '.joinexistingRoom', function(event){
+    event.preventDefault();
+    var roomName = $(this).attr("data-id");
+    console.log("joining room" + roomName);
+    socket.emit('joinRoom', roomName);
+  });
 
   socket.on('roomInfo', function(info) {
     var users = `<div class="singleDot"> ... </div>`
@@ -100,6 +100,29 @@ $(document).ready(function() {
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
     })
+
+  socket.on('rooms', function(rooms){
+    console.log(rooms);
+    var listofRooms = [];
+    for(var key in rooms){
+      if(rooms[key].hasOwnProperty('DJToken')){
+        listofRooms.push(key);
+      }
+    }
+    console.log(listofRooms);
+    $('.wrapper').empty();
+    $('.wrapper').append(`<h3 style="color:white">List of available rooms</h3>`);
+    $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
+
+    for(var i =0  ; i< listofRooms.length ;i++){
+      var roomItem = $(`<li>
+            <button type="button" class="joinexistingRoom" data-id='${listofRooms[i]}'>${listofRooms[i]}</button>
+                  </li>`);
+      $('#listofRooms').append(roomItem);
+
+    }
+
+  })
 
 
     socket.on('djRoomInfo', function(info) {
