@@ -132,6 +132,7 @@ $(document).ready(function () {
             })
 
         $('.wrapper').on('click', '.passDJ', function (event) {
+          console.log("***********************");
                 var newDjUsername = $(this)
                     .attr('data-id');
                 console.log("new dj name", newDjUsername);
@@ -345,8 +346,9 @@ $(document).ready(function () {
                     var userObj = users[i];
                     $('.activeUsers').append(
                       `<div data-id="${userObj.username}" class="center">
-		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
-		<div class="passDJ" data-id="${userObj.username}"></div>
+		<div class="passDJ" data-id="${userObj.username}">
+      <img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+    </div>
 	</div>`);
                 }
             }
@@ -430,8 +432,9 @@ $(document).ready(function () {
               if($('.activeUsers')){
                 $('.activeUsers').append(
                   `<div data-id="${userObj.username}" class="center">
-		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
-		<div class="passDJ" data-id="${userObj.username}"></div>
+                  <div class="passDJ" data-id="${userObj.username}">
+                    <img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+                  </div>
 	</div>`);
               }
               if($('.activeUsersforUser')){
