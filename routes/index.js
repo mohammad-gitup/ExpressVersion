@@ -130,11 +130,11 @@ module.exports = function (io) {
                     redirectUri: process.env.CALLBACK_URL
                 });
                 DJSpotifyApi.setAccessToken(DJAccessToken);
-                  var startTime = Date.now();
+                  //var startTime = Date.now();
                 DJSpotifyApi.getMyCurrentPlaybackState()
                     .then(function (data) {
-                         var timeDiff=Date.now() - startTime ;
-                          console.log("time Diff", timeDiff)
+                         //var timeDiff=Date.now() - startTime ;
+                          //console.log("time Diff", timeDiff)
                         if (!io.sockets.adapter.rooms[room].songURI) {
                             console.log("****FIRST TIME IT SHOULD ENTER HERE****");
                             console.log(data);
@@ -144,7 +144,7 @@ module.exports = function (io) {
                             io.to(room)
                                 .emit("DJSetting", {
                                     a: data.body.progress_ms,
-                                    b: data.body.item.uri + timeDiff
+                                    b: data.body.item.uri //+ timeDiff
                                 });
                             io.sockets.adapter.rooms[room].lastSongs = [data.body.item.name];
                         } else {
@@ -159,7 +159,7 @@ module.exports = function (io) {
                                 io.to(room)
                                     .emit("DJSetting", {
                                         a: data.body.progress_ms,
-                                        b: data.body.item.uri + timeDiff
+                                        b: data.body.item.uri //+ timeDiff
                                     });
 
                                 console.log("lasts songs are", io.sockets.adapter.rooms[room].lastSongs)
@@ -173,7 +173,7 @@ module.exports = function (io) {
                                         io.to(room)
                                             .emit("DJSetting", {
                                                 a: data.body.progress_ms,
-                                                b: data.body.item.uri + timeDiff
+                                                b: data.body.item.uri //+ timeDiff
                                             });
                                     }
                                     io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
