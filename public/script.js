@@ -194,11 +194,10 @@ $(document).ready(function() {
         </div>`;
     $('.wrapper').empty();
     $('.wrapper').append(home);
-});
-
-
+  });
 
   socket.on('newUserJoined', function(username){
+    console.log("newuserjoined");
     $('.activeUsers').append(`<span> | ${username} | </span>`);
   })
 

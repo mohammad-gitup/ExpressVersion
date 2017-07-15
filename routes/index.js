@@ -290,7 +290,6 @@ module.exports=function(io){
       socket.emit('rooms', io.sockets.adapter.rooms);
     })
 
-
     socket.on('djCloseRoom',function(roomName){
       console.log("Dj close room", roomName);
       io.to(roomName).emit("disconnectFromRoom",roomName);
