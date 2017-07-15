@@ -321,6 +321,13 @@ module.exports=function(io){
     socket.on('leaveRoom',function(obj){
       socket.leave(obj.roomName);
       io.sockets.to(obj.roomName).emit('userLeft', obj.username);
+      var array = io.sockets.adapter.rooms[obj.roomName].listeners;
+      for(var i=0;i<array.length;i++){
+        if(array[i].username===obj.username){
+          array.splice(i,1);
+        }
+      }
+      io.sockets.adapter.rooms[obj.roomName].listeners = array;
     })
 
     socket.on('newDj', function(newDjUsername){
@@ -370,6 +377,7 @@ module.exports=function(io){
     socket.on('leaveRoomDj', function(){
       var room = socket.room;
       socket.leave(room);
+
       socket.emit('djLeftRoom', room);
     })
 
