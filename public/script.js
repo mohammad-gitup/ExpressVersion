@@ -116,6 +116,18 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   })
 
+  $('.wrapper').on('click', 'passDJ', function(event){
+      var newDjUsername = $(this).attr('data-id');
+      console.log("new dj name", newDjUsername);
+      socket.emit('newDj', newDjUsername);
+  })
+
+  socket.on('updatePageNewDj', obj){
+    var imageURL = obj.djPhoto;
+    $('#djphoto').empty();
+    $('#djphoto').append(`Dj Photo: <img src="${imageURL}" style="width:304px;height:228px;">`);
+  }
+
   socket.on('roomInfo', function(roomInfo) {
     var users = `<div class="singleDot"> ... </div>`
     var djRoom=`<div>
@@ -123,11 +135,11 @@ $(document).ready(function() {
             Room Name ${roomInfo.room}
           </div>
 
-          <div>
+          <div id="djphoto">
             Dj Photo: <img src="${roomInfo.djPhoto}" style="width:304px;height:228px;">
           </div>
 
-          <ul class="activeUsers">
+          <ul class="activeUsersfoUser">
 
           </ul >
           <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
@@ -211,7 +223,8 @@ $(document).ready(function() {
 
   socket.on('newUserJoined', function(userObj){
     console.log("newuserjoined", userObj.username);
-    $('.activeUsers').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+    $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
+    $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
   })
 
 });

@@ -189,7 +189,6 @@ module.exports=function(io){
 
       var imageURL = socketObj['imageURL'];
 
-
       var spotifyApi = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
         clientSecret : process.env.SPOTIFY_SECRET,
@@ -303,6 +302,28 @@ module.exports=function(io){
 
     socket.on('leaveRoom',function(roomName){
       socket.leave(roomName);
+    })
+
+    socket.on('newDj', function(newDjUsername){
+
+      var spotifyApi = new SpotifyWebApi({
+        clientId : process.env.SPOTIFY_ID,
+        clientSecret : process.env.SPOTIFY_SECRET,
+        redirectUri : process.env.CALLBACK_URL
+      });
+
+      User.findOne({username: newDjUsername}, function(err, user){
+        spotifyApi.setRefreshToken(user.refreshToken);
+        spotifyApi.refreshAccessToken()
+        .then(function(data) {
+          spotifyApi.setAccessToken(data.body['access_token']);
+        })
+        .then(function(){
+          io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
+          io.sockets.adapter.rooms[room].imageURL = user.imageURL;
+          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
+        })
+      })
     })
 
   })
