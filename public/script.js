@@ -146,7 +146,7 @@ $(document).ready(function () {
                 var numberOfRooms = $('#numberOfRooms').text();
                 numberOfRooms = parseInt(numberOfRooms);
                 numberOfRooms += 1;
-                var final = numberOfRooms.toString();
+                var final = " " + numberOfRooms.toString() + " ";
                 $('#numberOfRooms').text(final);
             }
         })
