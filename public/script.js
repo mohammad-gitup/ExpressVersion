@@ -288,7 +288,7 @@ $(document).ready(function () {
                       </div>
                             </div>
 
-                    <div class="activeUsers center col-sm-offset-3">
+                    <div class="activeUsers center col-sm-offset-1">
                     </div>
 
                   </div>`;
@@ -336,7 +336,7 @@ $(document).ready(function () {
                       </div>
                     </div>
                           </div>
-                  <div class="activeUsers center col-sm-offset-3">
+                  <div class="activeUsers center col-sm-offset-1">
                   </div>
 
                 </div>`;
@@ -345,7 +345,7 @@ $(document).ready(function () {
                 for (var i = 0; i < users.length; i++) {
                     var userObj = users[i];
                     $('.activeUsers').append(
-                      `<div data-id="${userObj.username}" class="center" style ="width: 20%">
+                      `<div data-id="${userObj.username}" class="center" style ="width: 10%">
 		<div class="passDJ" data-id="${userObj.username}" >
       <img class="grow raise" style="border-radius: 50%; width: 45%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
     </div>
@@ -431,7 +431,7 @@ $(document).ready(function () {
               console.log("newuserjoined", userObj.username);
               if($('.activeUsers')){
                 $('.activeUsers').append(
-                  `<div data-id="${userObj.username}" class="center" style="width: 20%">
+                  `<div data-id="${userObj.username}" class="center" style="width: 10%">
                   <div class="passDJ" data-id="${userObj.username}">
                     <img class="grow raise" style="border-radius: 50%; width: 50%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
                   </div>
