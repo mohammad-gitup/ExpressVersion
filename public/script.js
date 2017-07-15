@@ -353,7 +353,6 @@ $(document).ready(function () {
             for (var i = lastSong.length; i > lastSong.length - 6; i--) {
                 if (lastSong[i]) {
                     $('.lastSongs').append(`<span style="color: black;" class="raise-room text">${lastSong[i]}</span>`);
-
                 }
             }
         });
