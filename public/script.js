@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    //final versions
+
     var socket = io();
     //first connect
     socket.on('connect', function() {
