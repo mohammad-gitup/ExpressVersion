@@ -147,9 +147,10 @@ $(document).ready(function() {
 
     console.log(listofRooms);
     $('.wrapper').empty();
-    $('.wrapper').append(`<h3 style="color:white">List of available rooms</h3>`);
-    $('.wrapper').append(`<input type="text" id="myInput" onkeyup="searchFunction()"
-    placeholder="Search for names..">`)
+    // $('.wrapper').append(`<h1 class="text headertext"></h1>`);
+    $('.wrapper').append(`<div class="center" style="width: 40%; margin-right: auto; margin-left: auto;">
+		<input style="font-size: 30px;" placeholder="There are ${listofRooms.length} rooms to browse..." class="ghost-input"></input>
+	</div>`)
     $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
 
     for(var i =0  ; i< listofRooms.length ;i++){

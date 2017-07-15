@@ -19,6 +19,11 @@ a:hover {
   justify-content: center;
 }
 
+.standard-text {
+  color: white;
+  font-family: Futura;
+}
+
 .headertext {
 	font-size: 55px;
 }
