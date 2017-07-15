@@ -213,6 +213,8 @@ $(document).ready(function() {
   })
 
   socket.on('newDjRoomInfo', function(info){
+    console.log("lsudfhasuhfbckusdhvgks ousdvbykdvuydxgjygkusycfst");
+    console.log(info);
     $('.wrapper').empty();
     var djRoom=`<div>
     <div>
