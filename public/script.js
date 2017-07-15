@@ -222,10 +222,13 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   });
 
+
   socket.on('newUserJoined', function(userObj){
     console.log("newuserjoined", userObj.username);
     $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
     $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+
+
   })
 
 });
