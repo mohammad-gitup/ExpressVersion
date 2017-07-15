@@ -253,16 +253,11 @@ module.exports=function(io){
 
     })
 
+    //fixed
+
     socket.on('joinRoom', function(requestedRoom, username, imageURL){
 
       console.log("joining room", username);
-
-      var roomInfo = {};
-      roomInfo.room = requestedRoom;
-      roomInfo.djPhoto = imageURL;
-      roomInfo.listeners = io.sockets.adapter.rooms[requestedRoom].listeners;
-
-      console.log(roomInfo.listeners);
 
       socket.emit("roomInfo", {room:requestedRoom,
         djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL,
@@ -325,8 +320,16 @@ module.exports=function(io){
 
     })
 
-    socket.on('leaveRoom',function(roomName){
-      socket.leave(roomName);
+    socket.on('leaveRoom',function(obj){
+      socket.leave(obj.roomName);
+      io.sockets.to(obj.roomName).emit('userLeft', obj.username);
+      var array = io.sockets.adapter.rooms[obj.roomName].listeners;
+      for(var i=0;i<array.length;i++){
+        if(array[i].username===obj.username){
+          array.splice(i,1);
+        }
+      }
+      io.sockets.adapter.rooms[obj.roomName].listeners = array;
     })
 
     socket.on('newDj', function(newDjUsername){
@@ -334,6 +337,14 @@ module.exports=function(io){
       var room = socket.room;
 
       console.log("came here for newDj", newDjUsername);
+
+      var array = io.sockets.adapter.rooms[room].listeners;
+      for(var i=0;i<array.length;i++){
+        if(array[i].username===newDjUsername){
+          array.splice(i,1);
+        }
+      }
+      io.sockets.adapter.rooms[room].listeners = array;
 
       var spotifyApi2 = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
@@ -353,14 +364,24 @@ module.exports=function(io){
           console.log("second success");
 
           io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
-          io.sockets.adapter.rooms[room].imageURL = user.imageURL;
-          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[room].imageURL});
+          io.sockets.adapter.rooms[room].imageURL = user.image;
+          console.log("*********", room, io.sockets.adapter.rooms[room].imageURL, io.sockets.adapter.rooms[room].listeners );
+          io.sockets.to(room).emit('newDjRoomInfo', {THEDJ:newDjUsername,room: room,
+            djPhoto: io.sockets.adapter.rooms[room].imageURL,
+          listeners: io.sockets.adapter.rooms[room].listeners});
           console.log("fuck you");
         })
         .catch(function(error){
           console.log(error);
         })
       })
+    })
+
+    socket.on('leaveRoomDj', function(){
+      var room = socket.room;
+      socket.leave(room);
+
+      socket.emit('djLeftRoom', room);
     })
 
   })

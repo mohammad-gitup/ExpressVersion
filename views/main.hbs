@@ -15,7 +15,7 @@
     		<br><br>
     		<div style="display: flex; justify-content: center; margin-right: 50%; margin-left: auto;">
     			<img style="position: sticky;" class="img-responsive text" src="/static/images/rightaux.svg" alt="">
-    			<a class="text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
+    			<a class="standard-text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
     		</div>
     </div>
   </div>
@@ -37,22 +37,22 @@
 </script>
 <script src="/static/script.js"></script>
 <script>
-  function searchFunction() {
-      // Declare variables
-      var input, filter, ul, li, a, i;
-      input = document.getElementById('myInput');
-      filter = input.value.toUpperCase();
-      ul = document.getElementById("listofRooms");
-      li = ul.getElementsByTagName('li');
+function searchFunction() {
+	// Declare variables
+	var input, filter, div, h1, i;
+	input = document.getElementById('myInput');
+	filter = input.value.toUpperCase();
+	div = document.getElementById("listofRooms");
+	h1 = div.getElementsByTagName('h1');
 
-      // Loop through all list items, and hide those who don't match the search query
-      for (i = 0; i < li.length; i++) {
-          a = li[i].getElementsByTagName("button")[0];
-          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-              li[i].style.display = "";
-          } else {
-              li[i].style.display = "none";
-          }
-      }
-  };
+	// Loop through all h1st items, and hide those who don't match the search query
+	for (i = 0; i < h1.length; i++) {
+		console.log(h1.length);
+		if (h1[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+			h1[i].style.display = "";
+		} else {
+			h1[i].style.display = "none";
+		}
+	}
+};
 </script>
