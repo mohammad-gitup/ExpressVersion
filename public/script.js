@@ -158,7 +158,7 @@ $(document).ready(function() {
 
   socket.on('disconnectFromRoom', function(roomName) {
     socket.emit('leaveRoom', roomName);
-    var mainRoom=`<button type="button" id="createRoom" class="btn btn-primary">
+    var home = `<button type="button" id="createRoom" class="btn btn-primary">
           Create Room
         </button>
         <button type="button" id="joinRoom" class="btn btn-primary">
@@ -168,7 +168,7 @@ $(document).ready(function() {
           <a href='/logout'>Logout<a>
         </button>`;
   $('.wrapper').empty();
-  $('.wrapper').append(mainRoom);
+  $('.wrapper').append(home);
 });
 
 
