@@ -95,11 +95,32 @@ $(document).ready(function() {
     <div>
       Users: ${info.djPhoto}
     </div>
-
+    <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
     </div>`;
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
     })
+
+
+    socket.on('djRoomInfo', function(info) {
+      var users = `<div class="singleDot"> ... </div>`
+      var djRoom=`<div>
+      <div>
+        Room Name ${info.room}
+      </div>
+
+      <div>
+        Dj Photo:
+      </div>
+
+      <div>
+        Users: ${info.djPhoto}
+      </div>
+      <button type="button" class="closeRoom" data-id="${info.room}">Leave room</button>
+      </div>`;
+        $('.wrapper').empty();
+        $('.wrapper').append(djRoom);
+      })
 
 
   $('#closeRoom').on('click',function(){
