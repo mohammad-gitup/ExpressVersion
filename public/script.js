@@ -115,22 +115,28 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   })
 
-  socket.on('roomInfo', function(info) {
+  socket.on('roomInfo', function(roomInfo) {
     var users = `<div class="singleDot"> ... </div>`
     var djRoom=`<div>
-    <div>
-      Room Name ${info.room}
-    </div>
+          <div>
+            Room Name ${roomInfo.room}
+          </div>
 
-    <div>
-      Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
-    </div>
+          <div>
+            Dj Photo: <img src="${roomInfo.djPhoto}" style="width:304px;height:228px;">
+          </div>
 
-    <ul class="activeUsers">
+          <ul class="activeUsers">
 
-    </ul >
-    <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
-    </div>`;
+          </ul >
+          <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
+          </div>`;
+    var users = roomInfo.listeners;
+    for(var i=0 ;i<users.length; i++){
+      var userObj = users[i];
+      $('.activeUsers').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+    }
+
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
     })
@@ -202,9 +208,9 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   });
 
-  socket.on('newUserJoined', function(username){
-    console.log("newuserjoined", username);
-    $('.activeUsers').append(`<li> | ${username} | </li>`);
+  socket.on('newUserJoined', function(userObj){
+    console.log("newuserjoined", userObj.username);
+    $('.activeUsers').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
   })
 
 });
