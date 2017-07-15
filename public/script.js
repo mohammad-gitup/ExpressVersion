@@ -143,6 +143,8 @@ $(document).ready(function () {
             var roomItem = $(`<h1 class="raise-room joinexistingRoom" data-id='${room}'>${room}</h1>`);
             if ($('#listofRooms')) {
                 $('#listofRooms').append(roomItem);
+                var numberOfRooms = $('#numberOfRooms').attr('data-id');
+
             }
         })
 
@@ -161,7 +163,7 @@ $(document).ready(function () {
             $('.wrapper')
                 .append(`
                 <div class="center">
-                  <h1 class="text-center text">There are ${listofRooms.length} rooms to browse</h1>
+                  <h1 class="text-center text" data-id="${listofRooms.length}">There are <span id="numberOfRooms">${listofRooms.length}</span> rooms to browse</h1>
                 </div>
                 <div class="center" style="width: 40%; margin-right: auto; margin-left: auto;">
                   <input id="myInput" style="font-size: 30px;" placeholder="Search for a room..." class="ghost-input text-center" id="myInput" onkeyup="searchFunction()"></input>
