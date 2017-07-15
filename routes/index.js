@@ -229,7 +229,7 @@ module.exports=function(io){
               return getDJData(io.sockets.adapter.rooms[room].DJToken, room);
             }else{
               clearInterval(x);
-            }, 5000);
+            }}, 5000);
           // io.sockets.adapter.rooms[room].clearVar = clearVar ;
         })
       })
