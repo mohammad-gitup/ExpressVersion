@@ -197,7 +197,7 @@ $(document).ready(function() {
   });
 
   socket.on('newUserJoined', function(username){
-    console.log("newuserjoined");
+    console.log("newuserjoined", username);
     $('.activeUsers').append(`<span> | ${username} | </span>`);
   })
 

@@ -239,7 +239,7 @@ module.exports=function(io){
 
     socket.on('joinRoom', function(requestedRoom, username){
 
-      console.log("joining room");
+      console.log("joining room", username);
       socket.emit("roomInfo", {room:requestedRoom, djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
 
       var forJoining = function(DJAccessToken) {
@@ -273,7 +273,7 @@ module.exports=function(io){
       socket.room = requestedRoom;
       socket.join(requestedRoom);
       io.sockets.adapter.rooms[requestedRoom].listeners.push(username); //add user to room
-      socket.broadcast.to(requestedRoom).emit('newUserJoined',username);
+      io.to(requestedRoom).emit('newUserJoined',username);
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
         socket.emit("DJSetting",{a: data.a, b: data.b});
