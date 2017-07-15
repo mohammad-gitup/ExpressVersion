@@ -228,6 +228,7 @@ module.exports=function(io){
     socket.on('joinRoom', function(requestedRoom){
 
       console.log("joining room");
+      socket.emit("roomInfo", {room:requestedRoom, djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
 
       var forJoining = function(DJAccessToken) {
         console.log("forJoining",DJAccessToken);

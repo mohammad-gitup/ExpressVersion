@@ -89,13 +89,13 @@ $(document).ready(function() {
     </div>
 
     <div>
-      Dj Photo:
+      Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
     </div>
 
     <div>
-      Users: ${info.djPhoto}
+      Users:
     </div>
-
+    <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
     </div>`;
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
@@ -109,9 +109,13 @@ $(document).ready(function() {
         listofRooms.push(key);
       }
     }
+
+
     console.log(listofRooms);
     $('.wrapper').empty();
     $('.wrapper').append(`<h3 style="color:white">List of available rooms</h3>`);
+    $('.wrapper').append(`<input type="text" id="myInput" onkeyup="searchFunction()"
+    placeholder="Search for names..">`)
     $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
 
     for(var i =0  ; i< listofRooms.length ;i++){
@@ -124,12 +128,29 @@ $(document).ready(function() {
 
   })
 
+  socket.on('djRoomInfo', function(info) {
+      var users = `<div class="singleDot"> ... </div>`
+      var djRoom=`<div>
+      <div>
+        Room Name ${info.room}
+      </div>
+
+      <div>
+        Dj Photo:
+      </div>
+
+      <div>
+        Users: ${info.djPhoto}
+      </div>
+      <button type="button" class="closeRoom" data-id="${info.room}">Leave room</button>
+      </div>`;
+        $('.wrapper').empty();
+        $('.wrapper').append(djRoom);
+      })
 
   $('#closeRoom').on('click',function(){
-  var id=$(this).attr('data-id');
-
-})
-
+    var id=$(this).attr('data-id');
+  })
 
 
 });
