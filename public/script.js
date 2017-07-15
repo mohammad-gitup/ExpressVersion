@@ -214,8 +214,9 @@ $(document).ready(function() {
     $('.wrapper').append(djRoom);
   })
 
-  socket.on('userLeft', function(data){
-    $(`ul li[data-id=${data.username}]`).remove();
+  socket.on('userLeft', function(username){
+    console.log("reached here");
+    $(`ul li[data-id=${username}]`).remove();
   })
 
 
