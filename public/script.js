@@ -89,7 +89,7 @@ $(document).ready(function() {
     </div>
 
     <div>
-      Dj Photo: <img src="${info.djPhoto}" alt="Mountain View" style="width:304px;height:228px;">
+      Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
     </div>
 
     <div>
