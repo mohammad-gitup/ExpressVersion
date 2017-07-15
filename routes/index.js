@@ -134,7 +134,7 @@ module.exports = function (io) {
                 DJSpotifyApi.getMyCurrentPlaybackState()
                     .then(function (data) {
                          var timeDiff=Date.now() - startTime ;
-                          console.log("time Diff", timeDiff)
+                          console.log("time Diff", typeof timeDiff)
                         if (!io.sockets.adapter.rooms[room].songURI) {
                             console.log("****FIRST TIME IT SHOULD ENTER HERE****");
                             console.log(data);
