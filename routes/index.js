@@ -310,7 +310,7 @@ module.exports = function (io) {
         socket.on('leaveRoom', function (obj) {
             socket.leave(obj.roomName);
             io.sockets.to(obj.roomName)
-                .emit('userLeft', obj.username);
+                .emit('userLeftRoom', obj.username);
             var array = io.sockets.adapter.rooms[obj.roomName].listeners;
             for (var i = 0; i < array.length; i++) {
                 if (array[i].username === obj.username) {

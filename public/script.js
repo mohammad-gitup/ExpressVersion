@@ -148,41 +148,6 @@ $(document).ready(function () {
             }
         })
 
-        socket.on('roomInfo', function (roomInfo) {
-            var users = `<div class="singleDot"> ... </div>`
-            var djRoom = `
-              <div>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <h1 data-id="${roomInfo.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
-                  </div>
-                  <div class="col-sm-6">
-                    <h1 class="text-center standard-text medium animated slideInDown">${roomInfo.room}</h1>
-                    <div id="djphoto" class='center'>
-                      <img src=${roomInfo.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
-                      </div>
-                      <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
-                    </div>
-                  </div>
-                  <ul class="activeUsersforUser">
-                  </ul >
-                  <ul class="lastSongs">
-                  </ul >
-              </div>`;
-
-            $('.wrapper')
-                .empty();
-            $('.wrapper')
-                .append(djRoom);
-            var users = roomInfo.listeners;
-            for (var i = 0; i < users.length; i++) {
-                var userObj = users[i];
-                $('.activeUsersforUser')
-                    .append(`<li data-id="${userObj.username}"> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
-            }
-
-        })
-
         socket.on('rooms', function (rooms) {
             console.log(rooms);
             var listofRooms = [];
@@ -219,13 +184,46 @@ $(document).ready(function () {
               </div>`);
         })
 
+        socket.on('roomInfo', function (roomInfo) {
+            var djRoom = `
+              <div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h1 data-id="${roomInfo.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
+                  </div>
+                  <div class="col-sm-6">
+                    <h1 class="text-center standard-text medium animated slideInDown">${roomInfo.room}</h1>
+                    <div id="djphoto" class='center'>
+                      <img src=${roomInfo.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+                      </div>
+                      <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
+                    </div>
+                  </div>
+                  <ul class="activeUsersforUser">
+                  </ul >
+                  <ul class="lastSongs">
+                  </ul >
+              </div>`;
+
+            $('.wrapper')
+                .empty();
+            $('.wrapper')
+                .append(djRoom);
+            var users = roomInfo.listeners;
+            for (var i = 0; i < users.length; i++) {
+                var userObj = users[i];
+                $('.activeUsersforUser')
+                    .append(`<li data-id="${userObj.username}"> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+            }
+
+        })
+
         socket.on('djRoomInfo', function (info) {
-            var users = `<div class="singleDot"> ... </div>`
             var djRoom = `
                 <div>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Close Room</h1>
+                      <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;"class="closeRoom text-center text small boxed raise">Close Room</h1>
                     </div>
                     <div class="col-sm-6">
                       <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
@@ -244,14 +242,6 @@ $(document).ready(function () {
             $('.wrapper').append(djRoom);
         });
 
-        socket.on('userLeft', function (username) {
-            console.log("reached here", username);
-            $('.activeUsers')
-                .find(`[data-id='${username}']`).remove();
-            $('.activeUsersforUser')
-                .find(`[data-id='${username}']`).remove();
-        });
-
         //FIX this select specific socket id
         socket.on('newDjRoomInfo', function (info) {
             if (info.djusername === localStorage.getItem('username')) {
@@ -260,7 +250,7 @@ $(document).ready(function () {
               <div>
                 <div class="row">
                   <div class="col-sm-3">
-                    <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
+                    <h1 data-id="${info.room}" style="margin-left: 5%; margin-right: 5%;" class="closeRoom text-center text small boxed raise">Close Room</h1>
                   </div>
                   <div class="col-sm-6">
                     <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
@@ -370,5 +360,13 @@ $(document).ready(function () {
             var imageURL = localStorage.getItem('imageURL');
             socket.emit('joinRoom', room, username, imageURL);
         })
+
+        socket.on('userLeftRoom', function (username) {
+            console.log("reached here", username);
+            $('.activeUsers')
+                .find(`[data-id='${username}']`).remove();
+            $('.activeUsersforUser')
+                .find(`[data-id='${username}']`).remove();
+        });
 
     });
