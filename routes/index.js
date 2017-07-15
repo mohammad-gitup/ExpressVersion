@@ -151,7 +151,8 @@ module.exports=function(io){
             console.log(data);
             io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
             io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
-            socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+            // major change made here in case stuff goes wrong
+            io.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
           }
           else {
             console.log("****same song****");
