@@ -120,6 +120,7 @@ $(document).ready(function() {
       var newDjUsername = $(this).attr('data-id');
       console.log("new dj name", newDjUsername);
       socket.emit('newDj', newDjUsername);
+      
   })
 
   socket.on('updatePageNewDj', function(obj){
@@ -232,13 +233,11 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   });
 
-
   socket.on('newUserJoined', function(userObj){
     console.log("newuserjoined", userObj.username);
     $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
     $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
   })
-
 
   socket.on('lastSongsChanged', function(lastSong){
     console.log("lastSongsChanged", lastSong);
