@@ -129,7 +129,7 @@ $(document).ready(function() {
           <ul class="activeUsers">
 
           </ul >
-          <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
+          <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
           </div>`;
     var users = roomInfo.listeners;
     for(var i=0 ;i<users.length; i++){
