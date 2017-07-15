@@ -153,7 +153,7 @@ module.exports=function(io){
             io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
 
             // major change made here in case stuff goes wrong
-            io.sockets.in(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+            io.sockets.broadcast.in(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
             io.sockets.adapter.rooms[room].lastSongs = [data.body.item.name];
 
@@ -170,11 +170,11 @@ module.exports=function(io){
               io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
 
               //change made here
-              io.sockets.in(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+              io.sockets.broadcast.in(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
               io.sockets.adapter.rooms[room].lastSongs.push(data.body.item.name);
               console.log("lasts songs are",io.sockets.adapter.rooms[room].lastSongs)
-              io.sockets.in(room).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
+              io.sockets.broadcast.in(room).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
               //socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
             }
