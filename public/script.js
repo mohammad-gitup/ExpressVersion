@@ -21,7 +21,7 @@ $(document).ready(function() {
   socket.on('DJSetting', function(data) {
 
     console.log("reaching dj setting");
-    var songProgress = data.a;
+    var songProgress = data.a ;
     var songURI = data.b;
     //ajax call will be done here
     $.ajax({
@@ -84,8 +84,9 @@ $(document).ready(function() {
     event.preventDefault();
     var roomName = $(this).attr("data-id");
     var username = localStorage.getItem('username');
+    var imageURL = localStorage.getItem('imageURL');
     console.log("joining room" + roomName);
-    socket.emit('joinRoom', roomName, username);
+    socket.emit('joinRoom', roomName, username, imageURL);
   });
 
   $('.wrapper').on('click', '.closeRoom', function(event){
@@ -115,24 +116,48 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   })
 
-  socket.on('roomInfo', function(info) {
+  $('.wrapper').on('click', '.passDJ', function(event){
+      var newDjUsername = $(this).attr('data-id');
+      console.log("new dj name", newDjUsername);
+      socket.emit('newDj', newDjUsername);
+  })
+
+  socket.on('updatePageNewDj', function(obj){
+    var imageURL = obj.djPhoto;
+    $('#djphoto').empty();
+    $('#djphoto').append(`Dj Photo: <img src="${imageURL}" style="width:304px;height:228px;">`);
+  })
+
+  socket.on('roomInfo', function(roomInfo) {
+    console.log("roomIN]", roomInfo);
     var users = `<div class="singleDot"> ... </div>`
     var djRoom=`<div>
-    <div>
-      Room Name ${info.room}
-    </div>
+          <div>
+            Room Name ${roomInfo.room}
+          </div>
 
-    <div>
-      Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
-    </div>
+          <div id="djphoto">
+            Dj Photo: <img src="${roomInfo.djPhoto}" style="width:304px;height:228px;">
+          </div>
 
-    <div class="activeUsers">
-      Users:
-    </div >
-    <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
-    </div>`;
+          <ul class="activeUsersforUser">
+
+          </ul >
+
+          <ul class="lastSongs">
+
+          </ul >
+          <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
+          </div>`;
+
+
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
+      var users = roomInfo.listeners;
+      for(var i=0 ;i<users.length; i++){
+        var userObj = users[i];
+        $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+      }
     })
 
   socket.on('rooms', function(rooms){
@@ -174,9 +199,14 @@ $(document).ready(function() {
         Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
       </div>
 
-      <div class="activeUsers">
-        users:
-      </div>
+      <ul class="activeUsers">
+
+      </ul>
+
+      <ul class="lastSongs">
+
+      </ul >
+
       <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
     </div>`;
     $('.wrapper').empty();
@@ -203,9 +233,24 @@ $(document).ready(function() {
     $('.wrapper').append(home);
   });
 
-  socket.on('newUserJoined', function(username){
-    console.log("newuserjoined", username);
-    $('.activeUsers').append(`<span> | ${username} | </span>`);
+
+  socket.on('newUserJoined', function(userObj){
+    console.log("newuserjoined", userObj.username);
+    $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
+    $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+  })
+
+
+  socket.on('lastSongsChanged', function(lastSong){
+    console.log("lastSongsChanged", lastSong);
+    $('.lastSongs').empty();
+    //length of lasts songs, if we want more than 5 we can change the info here
+    for(var i=lastSong.length;i>lastSong.length-6;i--){
+      if(lastSong[i]){
+          $('.lastSongs').append(`<li> ${lastSong[i]} </li>`);
+      }
+    }
+
   })
 
 });

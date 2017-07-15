@@ -151,7 +151,13 @@ module.exports=function(io){
             console.log(data);
             io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
             io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
-            socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+
+            // major change made here in case stuff goes wrong
+            io.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+
+            io.sockets.adapter.rooms[room].lastSongs = [data.body.item.name];
+
+
           }
           else {
             console.log("****same song****");
@@ -162,13 +168,22 @@ module.exports=function(io){
               console.log("song changed altogether");
               io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
               io.sockets.adapter.rooms[room].songURI = data.body.item.uri;
-              socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+
+              //change made here
+              io.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+
+              io.sockets.adapter.rooms[room].lastSongs.push(data.body.item.name);
+              console.log("lasts songs are",io.sockets.adapter.rooms[room].lastSongs)
+              io.to(room).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
+              //socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+
             }
             else {
               if(data.body.is_playing){
                 if(Math.abs(data.body.progress_ms - io.sockets.adapter.rooms[room].timeProgress) > 20000 ){
                   console.log("****same song but change in time*****");
-                  socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
+                  //change made here
+                  io.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
                 }
                 io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
               }
@@ -189,6 +204,7 @@ module.exports=function(io){
 
       var imageURL = socketObj['imageURL'];
 
+      socket.room = room;
 
       var spotifyApi = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
@@ -222,6 +238,7 @@ module.exports=function(io){
 
           socket.emit('djRoomInfo', {room:room, djPhoto: io.sockets.adapter.rooms[room].imageURL})
           io.sockets.adapter.rooms[room].listeners = [];
+          console.log("set listeners array", io.sockets.adapter.rooms[room].listeners);
 
           var x= setInterval(function(){
             if(io.sockets.adapter.rooms[room]){
@@ -236,10 +253,20 @@ module.exports=function(io){
 
     })
 
-    socket.on('joinRoom', function(requestedRoom, username){
+    socket.on('joinRoom', function(requestedRoom, username, imageURL){
 
       console.log("joining room", username);
-      socket.emit("roomInfo", {room:requestedRoom, djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
+
+      var roomInfo = {};
+      roomInfo.room = requestedRoom;
+      roomInfo.djPhoto = imageURL;
+      roomInfo.listeners = io.sockets.adapter.rooms[requestedRoom].listeners;
+
+      console.log(roomInfo.listeners);
+
+      socket.emit("roomInfo", {room:requestedRoom,
+        djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL,
+        listeners: io.sockets.adapter.rooms[requestedRoom].listeners})
 
       var forJoining = function(DJAccessToken) {
         console.log("forJoining",DJAccessToken);
@@ -271,12 +298,15 @@ module.exports=function(io){
       }
       socket.room = requestedRoom;
       socket.join(requestedRoom);
-      io.sockets.adapter.rooms[requestedRoom].listeners.push(username); //add user to room
-      io.to(requestedRoom).emit('newUserJoined',username);
+      var userObj = {
+        username: username,
+        imageURL: imageURL,
+      }
+      io.sockets.adapter.rooms[requestedRoom].listeners.push(userObj); //add user to room
+      io.to(requestedRoom).emit('newUserJoined', userObj);
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
         socket.emit("DJSetting",{a: data.a, b: data.b});
-        socket.emit("roomInfo", {room:requestedRoom, djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
       })
       .catch(function(error){
         console.log(error);
@@ -297,6 +327,39 @@ module.exports=function(io){
 
     socket.on('leaveRoom',function(roomName){
       socket.leave(roomName);
+    })
+
+    socket.on('newDj', function(newDjUsername){
+
+      var room = socket.room;
+
+      console.log("came here for newDj", newDjUsername);
+
+      var spotifyApi2 = new SpotifyWebApi({
+        clientId : process.env.SPOTIFY_ID,
+        clientSecret : process.env.SPOTIFY_SECRET,
+        redirectUri : process.env.CALLBACK_URL
+      });
+
+      User.findOne({username: newDjUsername}, function(err, user){
+        console.log("user", user);
+        spotifyApi2.setRefreshToken(user.refreshToken);
+        spotifyApi2.refreshAccessToken()
+        .then(function(data) {
+          console.log("first successs");
+          spotifyApi2.setAccessToken(data.body['access_token']);
+        })
+        .then(function(){
+          console.log("second success");
+          io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
+          io.sockets.adapter.rooms[room].imageURL = user.imageURL;
+          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[room].imageURL});
+          console.log("fuck you");
+        })
+        .catch(function(error){
+          console.log(error);
+        })
+      })
     })
 
   })

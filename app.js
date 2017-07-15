@@ -60,7 +60,11 @@ passport.use(new SpotifyStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     console.log("profile", profile);
-    User.findOrCreate({ spotifyId: profile.id }, {refreshToken:refreshToken, image: profile.photos[0], username: profile.displayName }, function (err, user) {
+    var photo="";
+    if(profile.photos){
+      photo = profile.photos[0];
+    }
+    User.findOrCreate({ spotifyId: profile.id }, {refreshToken:refreshToken, image: photo, username: profile.displayName }, function (err, user) {
       return cb(err, user);
     });
   }
