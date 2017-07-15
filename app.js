@@ -59,7 +59,8 @@ passport.use(new SpotifyStrategy({
     callbackURL: process.env.CALLBACK_URL
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ spotifyId: profile.id }, {refreshToken:refreshToken, image: profile.photos[0]}, function (err, user) {
+    console.log("profile", profile);
+    User.findOrCreate({ spotifyId: profile.id }, {refreshToken:refreshToken, image: profile.photos[0], username: profile.displayName }, function (err, user) {
       return cb(err, user);
     });
   }

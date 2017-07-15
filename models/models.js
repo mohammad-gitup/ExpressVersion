@@ -32,7 +32,8 @@ userSchema.statics.findOrCreate=function(obj1,obj2,cb){
         var newUser=new User({
         spotifyId:obj1.spotifyId,
         refreshToken:obj2.refreshToken,
-        image: obj2.image
+        image: obj2.image,
+        username: obj2.username
       })
       newUser.save(function(err, user){
         cb(err,user);
