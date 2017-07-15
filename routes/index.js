@@ -224,8 +224,8 @@ module.exports=function(io){
           socket.emit('djRoomInfo', {room:room, djPhoto: io.sockets.adapter.rooms[room].imageURL})
           io.sockets.adapter.rooms[room].listeners = [];
 
-          var clearVar =setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
-          io.sockets.adapter.rooms[room].clearVar = clearVar ;
+         setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
+          // io.sockets.adapter.rooms[room].clearVar = clearVar ;
         })
       })
 
@@ -288,7 +288,7 @@ module.exports=function(io){
     socket.on('djCloseRoom',function(roomName){
       console.log("Dj close room", roomName);
       io.to(roomName).emit("disconnectFromRoom",roomName);
-      clearInterval(io.sockets.adapter.rooms[room].clearVar);
+      //clearInterval(io.sockets.adapter.rooms[room].clearVar);
     })
 
     socket.on('leaveRoom',function(roomName){
