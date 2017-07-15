@@ -285,7 +285,7 @@ module.exports=function(io){
         username: username,
         imageURL: imageURL,
       }
-      io.sockets.adapter.rooms[requestedRoom].listeners.push({userObj}); //add user to room
+      io.sockets.adapter.rooms[requestedRoom].listeners.push(userObj); //add user to room
       io.to(requestedRoom).emit('newUserJoined', userObj);
       forJoining(io.sockets.adapter.rooms[requestedRoom].DJToken)
       .then(function(data){
