@@ -253,6 +253,8 @@ module.exports=function(io){
 
     })
 
+    //fixed
+
     socket.on('joinRoom', function(requestedRoom, username, imageURL){
 
       console.log("joining room", username);
