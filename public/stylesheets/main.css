@@ -13,8 +13,8 @@ a:hover {
 }
 
 .text {
-	color: white;
-	font-family: Futura;
+  color: white;
+  font-family: Futura;
   display: flex;
   justify-content: center;
 }
@@ -25,12 +25,12 @@ a:hover {
 }
 
 .headertext {
-	font-size: 55px;
+  font-size: 55px;
 }
 
 .middle {
-	font-size: 25px;
-	margin-bottom: 25px;
+  font-size: 25px;
+  margin-bottom: 25px;
 }
 
 .label-text {
@@ -87,4 +87,25 @@ a:hover {
 }
 .ghost-input:focus {
   border-bottom:1px solid #ddd;
+}
+
+.room-list {
+
+}
+
+.raise-room {
+  -moz-transition: box-shadow 0.25s;
+  -o-transition: box-shadow 0.25s;
+  -webkit-transition: box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.raise-room:hover {
+  box-shadow: 0 1px 5px grey;
+  cursor: pointer;
+
 }
