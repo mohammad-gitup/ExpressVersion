@@ -112,6 +112,8 @@ $(document).ready(function() {
     console.log(listofRooms);
     $('.wrapper').empty();
     $('.wrapper').append(`<h3 style="color:white">List of available rooms</h3>`);
+    $('.wrapper').append(`<input type="text" id="myInput" onkeyup="myFunction()"
+    placeholder="Search for names..">`)
     $('.wrapper').append(`<ul id="listofRooms"> </ul>`);
 
     for(var i =0  ; i< listofRooms.length ;i++){
@@ -124,8 +126,7 @@ $(document).ready(function() {
 
   })
 
-
-    socket.on('djRoomInfo', function(info) {
+  socket.on('djRoomInfo', function(info) {
       var users = `<div class="singleDot"> ... </div>`
       var djRoom=`<div>
       <div>
@@ -145,12 +146,28 @@ $(document).ready(function() {
         $('.wrapper').append(djRoom);
       })
 
-
   $('#closeRoom').on('click',function(){
-  var id=$(this).attr('data-id');
+    var id=$(this).attr('data-id');
+  })
 
-})
+  function myFunction() {
+      // Declare variables
+      var input, filter, ul, li, a, i;
+      input = document.getElementById('myInput');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("listofRooms");
+      li = ul.getElementsByTagName('li');
 
+      // Loop through all list items, and hide those who don't match the search query
+      for (i = 0; i < li.length; i++) {
+          a = li[i].getElementsByTagName("button")[0];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+  };
 
 
 });
