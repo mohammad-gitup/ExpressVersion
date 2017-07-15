@@ -198,7 +198,7 @@ $(document).ready(function () {
                   <div class="col-sm-6">
                     <h1 class="text-center standard-text medium animated slideInDown">${roomInfo.room}</h1>
                     <div id="djphoto" class='center'>
-                      <img src=${roomInfo.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+                      <img src=${roomInfo.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 20%; height: 20%;" >
                       </div>
                       <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
                     </div>
@@ -259,7 +259,7 @@ $(document).ready(function () {
                     <div class="col-sm-6">
                       <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
                       <div id="djphoto" class='center'>
-                        <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+                        <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 20%; height: 20%;" >
                         </div>
                         <h2 class="text-center standard-text small">You are the host</h2>
                       </div>
@@ -309,7 +309,7 @@ $(document).ready(function () {
                   <div class="col-sm-6">
                     <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
                     <div id="djphoto" class='center'>
-                      <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+                      <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 20%; height: 20%;" >
                       </div>
                       <h2 class="text-center standard-text small">You are the host</h2>
                     </div>
@@ -347,7 +347,7 @@ $(document).ready(function () {
                     $('.activeUsers').append(
                       `<div data-id="${userObj.username}" class="center">
 		<div class="passDJ" data-id="${userObj.username}">
-      <img class="grow raise" style="border-radius: 50%; width: 100%; height: 100%; margin: 1%;" src="${userObj.imageURL}" alt="">
+      <img class="grow raise" style="border-radius: 50%; width: 25%; height: auto; margin: 1%;" src="${userObj.imageURL}" alt="">
     </div>
 	</div>`);
                 }
@@ -363,7 +363,7 @@ $(document).ready(function () {
                       <div class="col-sm-6">
                         <h1 class="text-center standard-text medium animated slideInDown">${info.room}</h1>
                         <div id="djphoto" class='center'>
-                          <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+                          <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 20%; height: 20%;" >
                           </div>
                           <h2 class="text-center standard-text small">Hosted by: ${info.djusername}</h2>
                         </div>
@@ -433,7 +433,7 @@ $(document).ready(function () {
                 $('.activeUsers').append(
                   `<div data-id="${userObj.username}" class="center">
                   <div class="passDJ" data-id="${userObj.username}">
-                    <img class="grow raise" style="border-radius: 50%; width: 100%; height: 100%; margin: 1%;" src="${userObj.imageURL}" alt="">
+                    <img class="grow raise" style="border-radius: 50%; width: 25%; height: auto; margin: 1%;" src="${userObj.imageURL}" alt="">
                   </div>
 	</div>`);
               }
