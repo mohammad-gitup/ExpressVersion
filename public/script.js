@@ -316,10 +316,11 @@ $(document).ready(function () {
                 var users = info.listeners;
                 for (var i = 0; i < users.length; i++) {
                     var userObj = users[i];
-                    $('.activeUsers').append(`
-                    <li data-id="${userObj.username}">
-                      | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                    </li>`);
+                    $('.activeUsers').append(
+                      `<li data-id="${userObj.username}">
+                        | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
+                        | <img src=${userObj.imageURL}>
+                      </li>`);
                 }
             }
             else {
@@ -347,11 +348,12 @@ $(document).ready(function () {
                 var users = info.listeners;
                 for (var i = 0; i < users.length; i++) {
                     var userObj = users[i];
-                    $('.activeUsersforUser').append(`
-                      <li data-id="${userObj.username}">
-                     | ${userObj.username}
-                     | <img src=${userObj.imageURL}>
-                      </li>`);
+                    $('.activeUsersforUser').append(
+                      `<li
+                        data-id="${userObj.username}">
+                        | ${userObj.username} |
+                        <img src=${userObj.imageURL}>
+                        </li>`);
                 }
             }
         });
@@ -378,13 +380,13 @@ $(document).ready(function () {
 
         socket.on('newUserJoined', function (userObj) {
               console.log("newuserjoined", userObj.username);
-              $('.activeUsers').append(`
-                <li data-id="${userObj.username}">
+              $('.activeUsers').append(
+                `<li data-id="${userObj.username}">
                   | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
                   | <img src=${userObj.imageURL}>
                 </li>`);
-                $('.activeUsersforUser').append(`
-                  <li
+                $('.activeUsersforUser').append(
+                  `<li
                     data-id="${userObj.username}">
                     | ${userObj.username} |
                     <img src=${userObj.imageURL}>
@@ -402,7 +404,6 @@ $(document).ready(function () {
                 }
             }
         });
-
 
         socket.on('djLeftRoom', function (room) {
             var username = localStorage.getItem('username');
