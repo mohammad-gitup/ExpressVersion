@@ -287,7 +287,7 @@ $(document).ready(function () {
                         <div id="djphoto" class='center'>
                           <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
                           </div>
-                          <h2 class="text-center standard-text small">You are the host</h2>
+                          <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
                         </div>
                       </div>
                   <ul class="activeUsersforUser">
