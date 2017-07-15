@@ -82,6 +82,12 @@ $(document).ready(function() {
     socket.emit('joinRoom', roomName, username);
   });
 
+  $('.wrapper').on('click', '.closeRoom', function(event){
+    event.preventDefault();
+    var roomName = $(this).attr("data-id");
+    socket.emit('djCloseRoom', roomName);
+  })
+
   socket.on('roomInfo', function(info) {
     var users = `<div class="singleDot"> ... </div>`
     var djRoom=`<div>
@@ -140,30 +146,32 @@ $(document).ready(function() {
         Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
       </div>
 
-      <div>
+      <div class="activeUsers">
         users:
       </div>
       <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
-      </div>`;
-        $('.wrapper').empty();
-        $('.wrapper').append(djRoom);
+    </div>`;
+    $('.wrapper').empty();
+    $('.wrapper').append(djRoom);
 
-      });
+  });
 
-      socket.on('disconnectFromRoom', function(roomName) {
-        socket.emit('leaveRoom', roomName);
-        var mainRoom=`<button type="button" id="createRoom" class="btn btn-primary">
-                Create Room
-            </button>
-            <button type="button" id="joinRoom" class="btn btn-primary">
-              Join Room
-            </button>
-            <button type="button" class="btn btn-primary">
-              <a href='/logout'>Logout<a>
-            </button>`;
-          $('.wrapper').empty();
-          $('.wrapper').append(mainRoom);
-          });
+  socket.on('disconnectFromRoom', function(roomName) {
+    socket.emit('leaveRoom', roomName);
+    var mainRoom=`<button type="button" id="createRoom" class="btn btn-primary">
+          Create Room
+        </button>
+        <button type="button" id="joinRoom" class="btn btn-primary">
+          Join Room
+        </button>
+        <button type="button" class="btn btn-primary">
+          <a href='/logout'>Logout<a>
+        </button>`;
+  $('.wrapper').empty();
+  $('.wrapper').append(mainRoom);
+});
+
+
 
   socket.on('newUserJoined', function(username){
     $('.activeUsers').append(`<span> | ${username} | </span>`);

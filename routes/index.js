@@ -286,7 +286,7 @@ module.exports=function(io){
 
     socket.on('djCloseRoom',function(roomName){
       console.log("Dj close room", roomName);
-      socket.to(room).emit("disconnectFromRoom",roomName);
+      socket.to(roomName).emit("disconnectFromRoom",roomName);
     })
 
     socket.on('leaveRoom',function(roomName){
