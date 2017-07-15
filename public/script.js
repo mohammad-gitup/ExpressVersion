@@ -99,10 +99,10 @@ $(document).ready(function () {
             });
 
         $('.wrapper').on('click', '.closeRoom', function (event) {
-                event.preventDefault();
-                var roomName = $(this).attr("data-id");
-                socket.emit('djCloseRoom', roomName);
-            });
+            event.preventDefault();
+            var roomName = $(this).attr("data-id");
+            socket.emit('djCloseRoom', roomName);
+        });
 
         $('.wrapper').on('click', '.leaveRoom', function (event) {
                 event.preventDefault();
@@ -314,7 +314,8 @@ $(document).ready(function () {
         });
 
         socket.on('disconnectFromRoom', function (roomName) {
-          socket.emit('leaveRoom', roomName);
+          var username = localStorage.getItem('username');
+          socket.emit('leaveRoom', {roomName:roomName, username: username} );
           var home = `
           <div class="container-fluid" >
             <div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
@@ -331,21 +332,26 @@ $(document).ready(function () {
               </div>`;
               $('.wrapper').empty();
               $('.wrapper').append(home);
-            });
+        });
 
         socket.on('newUserJoined', function (userObj) {
               console.log("newuserjoined", userObj.username);
-              $('.activeUsers').append(
-                `<li data-id="${userObj.username}">
-                  | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                  | <img src=${userObj.imageURL}>
-                </li>`);
+              if($('.activeUsers')){
+                $('.activeUsers').append(
+                  `<li data-id="${userObj.username}">
+                    | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
+                    | <img src=${userObj.imageURL}>
+                  </li>`);
+              }
+              if($('.activeUsersforUser')){
                 $('.activeUsersforUser').append(
                   `<li
                     data-id="${userObj.username}">
                     | ${userObj.username} |
                     <img src=${userObj.imageURL}>
                     </li>`);
+              }  
+
         });
 
         socket.on('lastSongsChanged', function(lastSong) {
@@ -368,10 +374,14 @@ $(document).ready(function () {
 
         socket.on('userLeftRoom', function (username) {
             console.log("reached here", username);
-            $('.activeUsers')
-                .find(`[data-id='${username}']`).remove();
-            $('.activeUsersforUser')
-                .find(`[data-id='${username}']`).remove();
+            if($('.activeUsers')){
+              $('.activeUsers')
+                  .find(`[data-id='${username}']`).remove();
+            }
+            if($('.activeUsersforUser')){
+              $('.activeUsersforUser')
+                  .find(`[data-id='${username}']`).remove();
+            }
         });
 
 });
