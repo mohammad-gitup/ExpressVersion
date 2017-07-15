@@ -189,6 +189,8 @@ module.exports=function(io){
 
       var imageURL = socketObj['imageURL'];
 
+      socket.room = room;
+
       var spotifyApi = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
         clientSecret : process.env.SPOTIFY_SECRET,
@@ -314,6 +316,8 @@ module.exports=function(io){
 
     socket.on('newDj', function(newDjUsername){
 
+      var room = socket.room;
+
       console.log("came here for newDj", newDjUsername);
 
       var spotifyApi2 = new SpotifyWebApi({
@@ -334,8 +338,11 @@ module.exports=function(io){
           console.log("second success");
           io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = user.imageURL;
-          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL});
+          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[room].imageURL});
           console.log("fuck you");
+        })
+        .catch(function(error){
+          console.log(error);
         })
       })
     })
