@@ -166,7 +166,7 @@ $(document).ready(function () {
             $('.wrapper')
                 .append(`
                 <div class="center">
-                  <h1 class="text-center text">There are <span id="numberOfRooms"> ${listofRooms.length} </span> rooms to browse</h1>
+                  <h1 class="text-center text">There are<span style="opacity: 0">I</span> <span id="numberOfRooms"> ${listofRooms.length} </span><span style="opacity: 0">I</span>rooms to browse</h1>
                 </div>
                 <div class="center" style="width: 40%; margin-right: auto; margin-left: auto;">
                   <input id="myInput" style="font-size: 30px;" placeholder="Search for a room..." class="ghost-input text-center" id="myInput" onkeyup="searchFunction()"></input>
