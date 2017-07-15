@@ -129,6 +129,7 @@ $(document).ready(function() {
   })
 
   socket.on('roomInfo', function(roomInfo) {
+    console.log("roomIN]", roomInfo);
     var users = `<div class="singleDot"> ... </div>`
     var djRoom=`<div>
           <div>
