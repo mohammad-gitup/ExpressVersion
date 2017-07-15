@@ -174,7 +174,7 @@ module.exports=function(io){
 
               io.sockets.adapter.rooms[room].lastSongs.push(data.body.item.name);
               console.log("lasts songs are",io.sockets.adapter.rooms[room].lastSongs)
-              io.to(requestedRoom).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
+              io.to(room).emit('lastSongsChanged',io.sockets.adapter.rooms[room].lastSongs);
               //socket.broadcast.to(room).emit("DJSetting",{a:data.body.progress_ms,b:data.body.item.uri});
 
             }

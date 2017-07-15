@@ -143,6 +143,10 @@ $(document).ready(function() {
           <ul class="activeUsersforUser">
 
           </ul >
+
+          <ul class="lastSongs">
+
+          </ul >
           <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
           </div>`;
 
@@ -197,6 +201,11 @@ $(document).ready(function() {
       <ul class="activeUsers">
 
       </ul>
+
+      <ul class="lastSongs">
+
+      </ul >
+
       <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
     </div>`;
     $('.wrapper').empty();
@@ -228,6 +237,19 @@ $(document).ready(function() {
     console.log("newuserjoined", userObj.username);
     $('.activeUsers').append(`<li> | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button> | <img src=${userObj.imageURL}> </li>`);
     $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+  })
+
+
+  socket.on('lastSongsChanged', function(lastSong){
+    console.log("lastSongsChanged", lastSong);
+    $('.lastSongs').empty();
+    //length of lasts songs, if we want more than 5 we can change the info here
+    for(var i=lastSong.length;i>lastSong.length-6;i--){
+      if(lastSong[i]){
+          $('.lastSongs').append(`<li> ${lastSong[i]} </li>`);
+      }
+    }
+
   })
 
 });
