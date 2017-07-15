@@ -228,8 +228,8 @@ $(document).ready(function () {
   </div>
         </div>
 
-                  <ul class="activeUsersforUser">
-                  </ul >
+                  <div class="activeUsersforUser">
+                  </div >
 
               </div>`;
 
@@ -241,7 +241,9 @@ $(document).ready(function () {
             for (var i = 0; i < users.length; i++) {
                 var userObj = users[i];
                 $('.activeUsersforUser')
-                    .append(`<li data-id="${userObj.username}"> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+                    .append(`<div data-id="${userObj.username}" class="center">
+		                          <img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+	                         </div>`);
             }
 
         })
@@ -285,8 +287,8 @@ $(document).ready(function () {
                       </div>
                             </div>
 
-                    <ul class="activeUsers">
-                    </ul>
+                    <div class="activeUsers">
+                    </div>
 
                   </div>`;
             $('.wrapper').empty();
@@ -333,8 +335,8 @@ $(document).ready(function () {
                       </div>
                     </div>
                           </div>
-                  <ul class="activeUsers">
-                  </ul>
+                  <div class="activeUsers">
+                  </div>
 
                 </div>`;
                 $('.wrapper').append(djRoom);
@@ -342,10 +344,10 @@ $(document).ready(function () {
                 for (var i = 0; i < users.length; i++) {
                     var userObj = users[i];
                     $('.activeUsers').append(
-                      `<li data-id="${userObj.username}">
-                        | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                        | <img src=${userObj.imageURL}>
-                      </li>`);
+                      `<div data-id="${userObj.username}" class="center">
+		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+		<div class="passDJ" data-id="${userObj.username}"></div>
+	</div>`);
                 }
             }
             else {
@@ -386,20 +388,18 @@ $(document).ready(function () {
                           </div>
                         </div>
                               </div>
-                  <ul class="activeUsersforUser">
-                  </ul >
-                  
+                  <div class="activeUsersforUser">
+                  </div >
+
                 </div>`;
                 $('.wrapper').append(djRoom);
                 var users = info.listeners;
                 for (var i = 0; i < users.length; i++) {
                     var userObj = users[i];
                     $('.activeUsersforUser').append(
-                      `<li
-                        data-id="${userObj.username}">
-                        | ${userObj.username} |
-                        <img src=${userObj.imageURL}>
-                        </li>`);
+                      `<div data-id="${userObj.username}" class="center">
+		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+	</div>`);
                 }
             }
         });
@@ -429,18 +429,16 @@ $(document).ready(function () {
               console.log("newuserjoined", userObj.username);
               if($('.activeUsers')){
                 $('.activeUsers').append(
-                  `<li data-id="${userObj.username}">
-                    | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                    | <img src=${userObj.imageURL}>
-                  </li>`);
+                  `<div data-id="${userObj.username}" class="center">
+		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+		<div class="passDJ" data-id="${userObj.username}"></div>
+	</div>`);
               }
               if($('.activeUsersforUser')){
                 $('.activeUsersforUser').append(
-                  `<li
-                    data-id="${userObj.username}">
-                    | ${userObj.username} |
-                    <img src=${userObj.imageURL}>
-                    </li>`);
+                  `<div data-id="${userObj.username}" class="center">
+		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+	</div>`);
               }
 
         });
