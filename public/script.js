@@ -87,7 +87,7 @@ $(document).ready(function () {
                 event.preventDefault();
                 console.log("reached jquery.");
                 socket.emit('getRooms');
-            })
+        })
 
         $('.wrapper').on('click', '.joinexistingRoom', function (event) {
                 event.preventDefault();
@@ -143,10 +143,11 @@ $(document).ready(function () {
             var roomItem = $(`<h1 class="raise-room joinexistingRoom" data-id='${room}'>${room}</h1>`);
             if ($('#listofRooms')) {
                 $('#listofRooms').append(roomItem);
-                var numberOfRooms = $('#numberOfRooms').val();
+                var numberOfRooms = $('#numberOfRooms').text();
                 numberOfRooms = parseInt(numberOfRooms);
                 numberOfRooms += 1;
-                $('#numberOfRooms').text(numberOfRooms);
+                var final = numberOfRooms.toString();
+                $('#numberOfRooms').text(final);
             }
         })
 
@@ -165,7 +166,7 @@ $(document).ready(function () {
             $('.wrapper')
                 .append(`
                 <div class="center">
-                  <h1 class="text-center text">There are <span id="numberOfRooms">${listofRooms.length}</span> rooms to browse</h1>
+                  <h1 class="text-center text">There are <span id="numberOfRooms"> ${listofRooms.length} </span> rooms to browse</h1>
                 </div>
                 <div class="center" style="width: 40%; margin-right: auto; margin-left: auto;">
                   <input id="myInput" style="font-size: 30px;" placeholder="Search for a room..." class="ghost-input text-center" id="myInput" onkeyup="searchFunction()"></input>
@@ -313,7 +314,7 @@ $(document).ready(function () {
             }
         });
 
-        socket.on('disconnectFromRoom', function (roomName) {
+        socket.on('leaveFromRoom', function (roomName) {
           var username = localStorage.getItem('username');
           socket.emit('leaveRoom', {roomName:roomName, username: username} );
           var home = `
@@ -350,7 +351,7 @@ $(document).ready(function () {
                     | ${userObj.username} |
                     <img src=${userObj.imageURL}>
                     </li>`);
-              }  
+              }
 
         });
 
@@ -361,7 +362,6 @@ $(document).ready(function () {
             for (var i = lastSong.length; i > lastSong.length - 6; i--) {
                 if (lastSong[i]) {
                     $('.lastSongs').append(`<span style="color: black;" class="raise-room text">${lastSong[i]}</span>`);
-
                 }
             }
         });
