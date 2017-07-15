@@ -99,10 +99,10 @@ $(document).ready(function () {
             });
 
         $('.wrapper').on('click', '.closeRoom', function (event) {
-                event.preventDefault();
-                var roomName = $(this).attr("data-id");
-                socket.emit('djCloseRoom', roomName);
-            });
+            event.preventDefault();
+            var roomName = $(this).attr("data-id");
+            socket.emit('djCloseRoom', roomName);
+        });
 
         $('.wrapper').on('click', '.leaveRoom', function (event) {
                 event.preventDefault();
@@ -143,8 +143,10 @@ $(document).ready(function () {
             var roomItem = $(`<h1 class="raise-room joinexistingRoom" data-id='${room}'>${room}</h1>`);
             if ($('#listofRooms')) {
                 $('#listofRooms').append(roomItem);
-                var numberOfRooms = $('#numberOfRooms').attr('data-id');
-
+                var numberOfRooms = $('#numberOfRooms').val();
+                numberOfRooms = parseInt(numberOfRooms);
+                numberOfRooms += 1;
+                $('#numberOfRooms').text(numberOfRooms);
             }
         })
 
@@ -163,7 +165,7 @@ $(document).ready(function () {
             $('.wrapper')
                 .append(`
                 <div class="center">
-                  <h1 class="text-center text" data-id="${listofRooms.length}">There are <span id="numberOfRooms">${listofRooms.length}</span> rooms to browse</h1>
+                  <h1 class="text-center text">There are <span id="numberOfRooms">${listofRooms.length}</span> rooms to browse</h1>
                 </div>
                 <div class="center" style="width: 40%; margin-right: auto; margin-left: auto;">
                   <input id="myInput" style="font-size: 30px;" placeholder="Search for a room..." class="ghost-input text-center" id="myInput" onkeyup="searchFunction()"></input>
@@ -312,7 +314,8 @@ $(document).ready(function () {
         });
 
         socket.on('disconnectFromRoom', function (roomName) {
-          socket.emit('leaveRoom', roomName);
+          var username = localStorage.getItem('username');
+          socket.emit('leaveRoom', {roomName:roomName, username: username} );
           var home = `
           <div class="container-fluid" >
             <div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
@@ -329,21 +332,26 @@ $(document).ready(function () {
               </div>`;
               $('.wrapper').empty();
               $('.wrapper').append(home);
-            });
+        });
 
         socket.on('newUserJoined', function (userObj) {
               console.log("newuserjoined", userObj.username);
-              $('.activeUsers').append(
-                `<li data-id="${userObj.username}">
-                  | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                  | <img src=${userObj.imageURL}>
-                </li>`);
+              if($('.activeUsers')){
+                $('.activeUsers').append(
+                  `<li data-id="${userObj.username}">
+                    | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
+                    | <img src=${userObj.imageURL}>
+                  </li>`);
+              }
+              if($('.activeUsersforUser')){
                 $('.activeUsersforUser').append(
                   `<li
                     data-id="${userObj.username}">
                     | ${userObj.username} |
                     <img src=${userObj.imageURL}>
                     </li>`);
+              }  
+
         });
 
         socket.on('lastSongsChanged', function(lastSong) {
@@ -365,10 +373,14 @@ $(document).ready(function () {
 
         socket.on('userLeftRoom', function (username) {
             console.log("reached here", username);
-            $('.activeUsers')
-                .find(`[data-id='${username}']`).remove();
-            $('.activeUsersforUser')
-                .find(`[data-id='${username}']`).remove();
+            if($('.activeUsers')){
+              $('.activeUsers')
+                  .find(`[data-id='${username}']`).remove();
+            }
+            if($('.activeUsersforUser')){
+              $('.activeUsersforUser')
+                  .find(`[data-id='${username}']`).remove();
+            }
         });
 
 });
