@@ -205,6 +205,13 @@ $(document).ready(function() {
   socket.on('newUserJoined', function(username){
     console.log("newuserjoined", username);
     $('.activeUsers').append(`<span> | ${username} | </span>`);
+  });
+
+  socket.on('newUserJoined', function(lastSongs){
+    for(var i=0 ;i<lastSongs.length; i++){
+    var song = lastSongs[i];
+    $('.activeUsers').append(`<li> ${song}</li>`);
+  }
   })
 
 });
