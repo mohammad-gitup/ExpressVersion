@@ -54,6 +54,53 @@ $(document).ready(function () {
             })
         })
 
+        socket.on('roomInfo', function(roomInfo) {
+    var users = `<div class="singleDot"> ... </div>`
+    var djRoom = `<div>
+    <div class="row">
+      <div class="col-sm-3">
+        <h1 data-id="${roomInfo.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
+      </div>
+      <div class="col-sm-6">
+        <h1 class="text-center standard-text medium animated slideInDown">${roomInfo.room}</h1>
+        <div id="djphoto" class='center'>
+          <img src=${roomInfo.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
+          </div>
+          <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
+        </div>
+      </div>
+      <div class="center">
+        <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
+      </div>
+
+
+      <ul class="activeUsersforUser">
+
+      </ul >
+
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body lastSongs">
+
+
+            </div>
+            <div class="modal-footer">
+              <h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>`;
+
         $('.wrapper').on('click', '#createRoom ', function (event) {
                 $('.wrapper')
                     .empty();
@@ -310,50 +357,52 @@ $(document).ready(function () {
         });
 
         socket.on('disconnectFromRoom', function (roomName) {
-            socket.emit('leaveRoom', roomName);
-            var home = `
-              <div class="container-fluid" >
-                <div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
-                  <a class="topLevel text" id="createRoom" ><span class="text-center raise boxed headertext text">Create</span></a>
-                  <img src="/static/images/leftaux.svg" class="img-responsive" style="position: sticky; margin-top: 10%;">
+          socket.emit('leaveRoom', roomName);
+          var home = `
+          <div class="container-fluid" >
+            <div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
+              <a class="topLevel text" id="createRoom" ><span class="text-center raise boxed headertext text">Create</span></a>
+              <img src="/static/images/leftaux.svg" class="img-responsive" style="position: sticky; margin-top: 10%;">
+            </div>
+            <br><br>
+              <h2 class="text middle">OR</h2>
+              <br><br>
+                <div style="display: flex; justify-content: center; margin-right: 50%; margin-left: auto;">
+                  <img style="position: sticky;" class="img-responsive text" src="/static/images/rightaux.svg" alt="">
+                  <a class="text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
                 </div>
-                <br><br>
-                  <h2 class="text middle">OR</h2>
-                  <br><br>
-                    <div style="display: flex; justify-content: center; margin-right: 50%; margin-left: auto;">
-                      <img style="position: sticky;" class="img-responsive text" src="/static/images/rightaux.svg" alt="">
-                      <a class="text" id="joinRoom"><span class="text-center raise boxed text headertext"><span class="text headertext" style="opacity: 0">1</span>Join<span class="text headertext" style="opacity: 0">1</span></span></a>
-                    </div>
-                  </div>`;
-            $('.wrapper').empty();
-            $('.wrapper').append(home);
-        });
+              </div>`;
+              $('.wrapper').empty();
+              $('.wrapper').append(home);
+            });
 
         socket.on('newUserJoined', function (userObj) {
-            console.log("newuserjoined", userObj.username);
-            $('.activeUsers').append(`
-                    <li data-id="${userObj.username}">
-                      | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
-                      | <img src=${userObj.imageURL}>
+              console.log("newuserjoined", userObj.username);
+              $('.activeUsers').append(`
+                <li data-id="${userObj.username}">
+                  | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
+                  | <img src=${userObj.imageURL}>
+                </li>`);
+                $('.activeUsersforUser').append(`
+                  <li
+                    data-id="${userObj.username}">
+                    | ${userObj.username} |
+                    <img src=${userObj.imageURL}>
                     </li>`);
-            $('.activeUsersforUser').append(`
-                      <li
-                        data-id="${userObj.username}">
-                        | ${userObj.username} |
-                        <img src=${userObj.imageURL}>
-                        </li>`);
         });
 
-        socket.on('lastSongsChanged', function (lastSong) {
+        socket.on('lastSongsChanged', function(lastSong) {
             console.log("lastSongsChanged", lastSong);
             $('.lastSongs').empty();
-            //length of lasts songs, if we want more than 5 we can change the info here
+                    //length of lasts songs, if we want more than 5 we can change the info here
             for (var i = lastSong.length; i > lastSong.length - 6; i--) {
                 if (lastSong[i]) {
-                    $('.lastSongs').append(`<li> ${lastSong[i]} </li>`);
+                    $('.lastSongs').append(`<span style="color: black;" class="raise-room text">${lastSong[i]}</span>`);
+
                 }
             }
         });
+
 
         socket.on('djLeftRoom', function (room) {
             var username = localStorage.getItem('username');
