@@ -92,9 +92,9 @@ $(document).ready(function() {
       Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
     </div>
 
-    <div>
+    <div class="activeUsers">
       Users:
-    </div>
+    </div >
     <button type="button" class="leaveRoom" data-id="${info.room}">Leave room</button>
     </div>`;
       $('.wrapper').empty();
@@ -136,20 +136,37 @@ $(document).ready(function() {
       </div>
 
       <div>
-        Dj Photo:
+        Dj Photo: <img src="${info.djPhoto}" style="width:304px;height:228px;">
       </div>
 
       <div>
-        Users: ${info.djPhoto}
+        users:
       </div>
-      <button type="button" class="closeRoom" data-id="${info.room}">Leave room</button>
+      <button type="button" class="closeRoom" data-id="${info.room}">Close room</button>
       </div>`;
         $('.wrapper').empty();
         $('.wrapper').append(djRoom);
-      })
+      });
 
-  $('#closeRoom').on('click',function(){
-    var id=$(this).attr('data-id');
+      socket.on('disconnectFromRoom', function(roomName) {
+        socket.emit('leaveRoom', roomName);
+        var mainRoom=`<button type="button" id="createRoom" class="btn btn-primary">
+                Create Room
+            </button>
+            <button type="button" id="joinRoom" class="btn btn-primary">
+              Join Room
+            </button>
+            <button type="button" class="btn btn-primary">
+              <a href='/logout'>Logout<a>
+            </button>`;
+          $('.wrapper').empty();
+          $('.wrapper').append(mainRoom);
+          });
+
+
+  $('.wrapper').on('click', '.closeRoom' ,function(){
+    var roomName=$(this).attr('data-id');
+    socket.emit('djCloseRoom', roomName);
   })
 
 

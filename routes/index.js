@@ -219,6 +219,7 @@ module.exports=function(io){
           socket.join(room);
           io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = imageURL;
+          socket.emit('djRoomInfo', {room:room, djPhoto: io.sockets.adapter.rooms[room].imageURL})
           setInterval(function(){return getDJData(io.sockets.adapter.rooms[room].DJToken, room)}, 5000);
         })
       })
@@ -276,6 +277,15 @@ module.exports=function(io){
       socket.emit('rooms', io.sockets.adapter.rooms);
     })
 
+
+    socket.on('djCloseRoom',function(roomName){
+      console.log("Dj close room", roomName);
+      socket.to(room).emit("disconnectFromRoom",roomName);
+    })
+
+    socket.on('leaveRoom',function(roomName){
+      socket.leave(roomName);
+    })
 
   })
 
