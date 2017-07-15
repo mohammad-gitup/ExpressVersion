@@ -318,9 +318,9 @@ module.exports=function(io){
 
     })
 
-    socket.on('leaveRoom',function(roomName){
-      socket.leave(roomName);
-      io.sockets.to(roomName).emit('userLeft', username);
+    socket.on('leaveRoom',function(obj){
+      socket.leave(obj.roomName);
+      io.sockets.to(obj.roomName).emit('userLeft', obj.username);
     })
 
     socket.on('newDj', function(newDjUsername){
