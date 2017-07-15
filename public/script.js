@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-        //final versions
-
         var socket = io();
         //first connect
         socket.on('connect', function () {
@@ -53,53 +51,6 @@ $(document).ready(function () {
                 }
             })
         })
-
-        socket.on('roomInfo', function(roomInfo) {
-    var users = `<div class="singleDot"> ... </div>`
-    var djRoom = `<div>
-    <div class="row">
-      <div class="col-sm-3">
-        <h1 data-id="${roomInfo.room}" style="margin-left: 5%; margin-right: 5%;"class="leaveRoom text-center text small boxed raise">Leave</h1>
-      </div>
-      <div class="col-sm-6">
-        <h1 class="text-center standard-text medium animated slideInDown">${roomInfo.room}</h1>
-        <div id="djphoto" class='center'>
-          <img src=${roomInfo.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
-          </div>
-          <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
-        </div>
-      </div>
-      <div class="center">
-        <h1 style=""class="text-center text small boxed raise" data-toggle="modal" data-target="#exampleModalLong">Played Songs</h1>
-      </div>
-
-
-      <ul class="activeUsersforUser">
-
-      </ul >
-
-      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2 style="color: black;"class="modal-title text-center standard-text" id="exampleModalLongTitle">Played Songs 🎉</h2>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body lastSongs">
-
-
-            </div>
-            <div class="modal-footer">
-              <h1 style="color: black; width: 20%; margin-right: auto; margin-left: auto;"class="text-center text small boxed raise" data-dismiss="modal">Close</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    </div>`;
 
         $('.wrapper').on('click', '#createRoom ', function (event) {
                 $('.wrapper')
@@ -419,4 +370,4 @@ $(document).ready(function () {
                 .find(`[data-id='${username}']`).remove();
         });
 
-    });
+});
