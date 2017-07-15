@@ -274,8 +274,9 @@ $(document).ready(function () {
                       | <button type="button" class="passDJ" data-id='${userObj.username}'>${userObj.username}</button>
                     </li>`);
                 }
-            } else {
-
+            }
+            else {
+              $('.wrapper').empty();
                 var djRoom = `
                   <div>
                     <div class="row">
@@ -287,7 +288,7 @@ $(document).ready(function () {
                         <div id="djphoto" class='center'>
                           <img src=${info.djPhoto} class="img-responsive animated wobble" style="border-radius: 50%; width: 10%; height: 20%;" >
                           </div>
-                          <h2 class="text-center standard-text small">Hosted by: ${roomInfo.djusername}</h2>
+                          <h2 class="text-center standard-text small">Hosted by: ${info.djusername}</h2>
                         </div>
                       </div>
                   <ul class="activeUsersforUser">
@@ -295,7 +296,6 @@ $(document).ready(function () {
                   <ul class="lastSongs">
                   </ul >
                 </div>`;
-                $('.wrapper').empty();
                 $('.wrapper').append(djRoom);
                 var users = info.listeners;
                 for (var i = 0; i < users.length; i++) {
