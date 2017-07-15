@@ -135,6 +135,7 @@ $(document).ready(function() {
 
     socket.on('roomInfo', function(roomInfo) {
         var users = `<div class="singleDot"> ... </div>`
+        
         var djRoom = `<div>
       <div>
         Room Name ${roomInfo.room}
