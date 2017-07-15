@@ -99,7 +99,7 @@ $(document).ready(function() {
     event.preventDefault();
     var roomName = $(this).attr("data-id");
     var username = localStorage.getItem('username');
-    socket.emit('leaveRoom', {roomName:roomName, username: username );
+    socket.emit('leaveRoom', {roomName:roomName, username: username} );
 
     var home = `<div class="container-fluid" >
     <div style="display: flex; justify-content: center; margin-left: 50%; margin-right: auto; margin-top: 5%">
