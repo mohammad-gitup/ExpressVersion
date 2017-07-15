@@ -314,22 +314,28 @@ module.exports=function(io){
 
     socket.on('newDj', function(newDjUsername){
 
-      var spotifyApi = new SpotifyWebApi({
+      console.log("came here for newDj", newDjUsername);
+
+      var spotifyApi2 = new SpotifyWebApi({
         clientId : process.env.SPOTIFY_ID,
         clientSecret : process.env.SPOTIFY_SECRET,
         redirectUri : process.env.CALLBACK_URL
       });
 
       User.findOne({username: newDjUsername}, function(err, user){
-        spotifyApi.setRefreshToken(user.refreshToken);
-        spotifyApi.refreshAccessToken()
+        console.log("user", user);
+        spotifyApi2.setRefreshToken(user.refreshToken);
+        spotifyApi2.refreshAccessToken()
         .then(function(data) {
-          spotifyApi.setAccessToken(data.body['access_token']);
+          console.log("first successs");
+          spotifyApi2.setAccessToken(data.body['access_token']);
         })
         .then(function(){
-          io.sockets.adapter.rooms[room].DJToken = spotifyApi.getAccessToken();
+          console.log("second success");
+          io.sockets.adapter.rooms[room].DJToken = spotifyApi2.getAccessToken();
           io.sockets.adapter.rooms[room].imageURL = user.imageURL;
-          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL})
+          socket.emit('updatePageNewDj', {djPhoto: io.sockets.adapter.rooms[requestedRoom].imageURL});
+          console.log("fuck you");
         })
       })
     })
