@@ -7,6 +7,11 @@ a:hover {
   text-decoration:none;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+}
+
 .text {
 	color: white;
 	font-family: Futura;
@@ -23,6 +28,10 @@ a:hover {
 	margin-bottom: 25px;
 }
 
+.label-text {
+  font-size: 30px;
+}
+
 .raise {
   box-shadow: 0 1px 2px #999;
   -moz-transition: box-shadow 0.25s;
@@ -35,8 +44,6 @@ a:hover {
   box-shadow: 0 1px 20px #999;
 }
 
-
-
 .topLevel {
   margin-top: 10%;
 }
@@ -47,4 +54,32 @@ a:hover {
   width: inherit;
   padding: 5px 30px 5px 30px;
   cursor: pointer;
+}
+
+.ghost-input {
+  display: block;
+  font-weight:300;
+  width: 100%;
+  font-size: 55px;
+  border:0px;
+  outline: none;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: white;
+  background: #1E1D1D;
+  font-family: Futura;
+  padding: 10px 15px;
+  margin: 30px 0px;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+  border-bottom:1px solid grey;
+
+}
+.ghost-input:focus {
+  border-bottom:1px solid #ddd;
 }
