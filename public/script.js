@@ -145,14 +145,15 @@ $(document).ready(function() {
           </ul >
           <button type="button" class="leaveRoom" data-id="${roomInfo.room}">Leave room</button>
           </div>`;
-    var users = roomInfo.listeners;
-    for(var i=0 ;i<users.length; i++){
-      var userObj = users[i];
-      $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
-    }
+
 
       $('.wrapper').empty();
       $('.wrapper').append(djRoom);
+      var users = roomInfo.listeners;
+      for(var i=0 ;i<users.length; i++){
+        var userObj = users[i];
+        $('.activeUsersforUser').append(`<li> | ${userObj.username} | <img src=${userObj.imageURL}> </li>`);
+      }
     })
 
   socket.on('rooms', function(rooms){
