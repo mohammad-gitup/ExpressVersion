@@ -10,6 +10,7 @@ a:hover {
 .center {
   display: flex;
   justify-content: center;
+  align-self: center;
 }
 
 .right {
@@ -59,6 +60,13 @@ a:hover {
 
 .topLevel {
   margin-top: 10%;
+}
+
+.grow { transition: all .2s ease-in-out; }
+
+.grow:hover {
+  transform: scale(1.5);
+  cursor: pointer;
 }
 
 .boxed {
