@@ -143,8 +143,8 @@ module.exports = function (io) {
                             // major change made here in case stuff goes wrong
                             io.to(room)
                                 .emit("DJSetting", {
-                                    a: data.body.progress_ms,
-                                    b: data.body.item.uri //+ timeDiff
+                                    a: data.body.progress_ms + timeDiff,
+                                    b: data.body.item.uri
                                 });
                             io.sockets.adapter.rooms[room].lastSongs = [data.body.item.name];
                         } else {
@@ -158,8 +158,8 @@ module.exports = function (io) {
                                 //change made here
                                 io.to(room)
                                     .emit("DJSetting", {
-                                        a: data.body.progress_ms,
-                                        b: data.body.item.uri //+ timeDiff
+                                        a: data.body.progress_ms + timeDiff,
+                                        b: data.body.item.uri
                                     });
 
                                 console.log("lasts songs are", io.sockets.adapter.rooms[room].lastSongs)
@@ -172,8 +172,8 @@ module.exports = function (io) {
                                         //change made here
                                         io.to(room)
                                             .emit("DJSetting", {
-                                                a: data.body.progress_ms,
-                                                b: data.body.item.uri //+ timeDiff
+                                                a: data.body.progress_ms + timeDiff,
+                                                b: data.body.item.uri
                                             });
                                     }
                                     io.sockets.adapter.rooms[room].timeProgress = data.body.progress_ms;
