@@ -242,8 +242,8 @@ $(document).ready(function () {
             for (var i = 0; i < users.length; i++) {
                 var userObj = users[i];
                 $('.activeUsersforUser')
-                    .append(`<div data-id="${userObj.username}" class="center">
-		                          <img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+                    .append(`<div data-id="${userObj.username}" class="center" style ="width: 10%">
+		                          <img class="grow raise" style="border-radius: 50%; width: 45%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
 	                         </div>`);
             }
 
@@ -399,8 +399,8 @@ $(document).ready(function () {
                 for (var i = 0; i < users.length; i++) {
                     var userObj = users[i];
                     $('.activeUsersforUser').append(
-                      `<div data-id="${userObj.username}" class="center">
-		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+                      `<div data-id="${userObj.username}" class="center" style ="width: 10%">
+		<img class="grow raise" style="border-radius: 50%; width: 45%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
 	</div>`);
                 }
             }
@@ -439,8 +439,8 @@ $(document).ready(function () {
               }
               if($('.activeUsersforUser')){
                 $('.activeUsersforUser').append(
-                  `<div data-id="${userObj.username}" class="center">
-		<img class="grow raise" style="border-radius: 50%; width: 5%; height: 20%; margin: 1%;" src="${userObj.imageURL}" alt="">
+                  `<div data-id="${userObj.username}" class="center" style="width: 10%">
+		<img class="grow raise" style="border-radius: 50%; width: 50%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
 	</div>`);
               }
 
