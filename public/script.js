@@ -240,7 +240,7 @@ $(document).ready(function () {
                 var userObj = users[i];
                 $('.activeUsersforUser')
                     .append(`<div data-id="${userObj.username}" class="center" style="width: 20%">
-		                          <img class="grow raise" style="border-radius: 50%; width: 50%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
+		                          <img class="grow raise" style="border-radius: 50%; width: 50%; height: 50%; margin-top: 5%;" src="${userObj.imageURL}" alt="">
 	                         </div>`);
             }
 
@@ -437,7 +437,7 @@ $(document).ready(function () {
               if($('.activeUsersforUser')){
                 $('.activeUsersforUser').append(
                   `<div data-id="${userObj.username}" class="center" style="width: 20%">
-		                <img class="grow raise" style="border-radius: 50%; width: 50%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
+		                <img class="grow raise" style="border-radius: 50%; width: 50%; height: 50%; margin-top: 5%;" src="${userObj.imageURL}" alt="">
 	                   </div>`);
               }
 
