@@ -303,7 +303,7 @@ module.exports = function (io) {
             socket.emit('rooms', io.sockets.adapter.rooms);
         })
 
-        socket.on('djCloseRoom', function (roomName) {
+        socket.on('djCloseRoom',function (roomName) {
           console.log("Dj close room", roomName);
           io.sockets.to(roomName).emit("leaveFromRoom", roomName);
         })
@@ -318,7 +318,7 @@ module.exports = function (io) {
             }
             io.sockets.adapter.rooms[obj.roomName].listeners = array;
             socket.leave(obj.roomName);
-            
+
         })
 
         socket.on('newDj', function (newDjUsername) {
