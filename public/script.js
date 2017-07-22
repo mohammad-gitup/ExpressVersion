@@ -138,7 +138,20 @@ $(document).ready(function () {
                 console.log("new dj name", newDjUsername);
                 socket.emit('newDj', newDjUsername);
                 socket.emit('leaveRoomDj');
-            })
+        })
+
+        $(window).bind('beforeunload', function(){
+          event.preventDefault();
+          if($('.leaveRoom')){
+            var roomName = $('.leaveRoom').attr("data-id");
+            var username = localStorage.getItem('username');
+            socket.emit('leaveRoom', {
+                roomName: roomName,
+                username: username
+            });
+          }
+        })
+
 
         socket.on('newRoomCreated', function (room) {
             var roomItem = $(`<h1 class="raise-room joinexistingRoom" data-id='${room}'>${room}</h1>`);
