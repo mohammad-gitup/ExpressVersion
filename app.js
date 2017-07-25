@@ -13,7 +13,6 @@ var auth = require('./routes/auth');
 var passport=require('passport');
 var SpotifyStrategy = require('passport-spotify').Strategy;
 
-
 //db
 
 var models=require('./models/models');

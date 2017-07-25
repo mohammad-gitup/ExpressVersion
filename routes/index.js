@@ -309,7 +309,6 @@ module.exports = function (io) {
         })
 
         socket.on('leaveRoom', function (obj) {
-            socket.leave(obj.roomName);
             io.sockets.to(obj.roomName).emit('userLeftRoom', obj.username);
             var array = io.sockets.adapter.rooms[obj.roomName].listeners;
             for (var i = 0; i < array.length; i++) {
@@ -318,6 +317,8 @@ module.exports = function (io) {
                 }
             }
             io.sockets.adapter.rooms[obj.roomName].listeners = array;
+            // moved below b/c leave rooms the room in the IO and therefore there is variable to act on
+            socket.leave(obj.roomName);
         })
 
         socket.on('newDj', function (newDjUsername) {

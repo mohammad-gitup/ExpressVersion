@@ -1,4 +1,15 @@
+
 $(document).ready(function () {
+
+  var createRoom = (`<div class="main">
+    <div class="container-fluid">
+      <div class="center topLevel" style="width: 60%; margin-right: auto; margin-left: auto;">
+        <input name="roomNameBar" id="roomName" placeholder="Enter a room name here" class="ghost-input text-center"></input>
+      </div>
+      <div class="center" >
+        <h1 class="text-center text label-text boxed raise" name="button" id="startRoom">Go Live</h1>
+      </div>
+    </div></div>`);
 
         var socket = io();
         //first connect
@@ -55,19 +66,14 @@ $(document).ready(function () {
         $('.wrapper').on('click', '#createRoom ', function (event) {
                 $('.wrapper')
                     .empty();
-                var createTemplate = $(`
-                  <div class="main">
-                    <div class="container-fluid">
-                      <div class="center topLevel" style="width: 60%; margin-right: auto; margin-left: auto;">
-                        <input name="roomNameBar" id="roomName" placeholder="Enter a room name here" class="ghost-input text-center"></input>
-                      </div>
-                      <div class="center" >
-                        <h1 class="text-center text label-text boxed raise" name="button" id="startRoom">Go Live</h1>
-                      </div>
-                    </div>
-                  </div>`);
-                $('.wrapper').append(createTemplate);
+                $('.wrapper').append(createRoom);
             })
+
+        $('.wrapper').on('click', '#altCreateRoom', function(err) {
+          $('.wrapper')
+              .empty();
+          $('.wrapper').append(createRoom);
+        })
 
         $('.wrapper').on('click', '#startRoom', function (event) {
                 event.preventDefault();
@@ -82,6 +88,7 @@ $(document).ready(function () {
                 };
                 socket.emit('startRoom', socketObj);
             });
+
 
         $('.wrapper').on('click', '#joinRoom', function (event) {
                 event.preventDefault();
@@ -184,7 +191,7 @@ $(document).ready(function () {
             $('.wrapper')
                 .append(`
               <div class="center">
-                <h1 class="text-center text middle boxed raise">Or start your own party</h1>
+                <h1 id="altCreateRoom" class="text-center text middle boxed raise">Or start your own party</h1>
               </div>`);
         })
 
@@ -346,7 +353,7 @@ $(document).ready(function () {
                     var userObj = users[i];
                     $('.activeUsers').append(
                       `<div data-id="${userObj.username}" class="center" style ="width: 10%">
-		<div class="passDJ" data-id="${userObj.username}" >
+		<div class="passDJ" data-id="${userObj.username}">
       <img class="grow raise" style="border-radius: 50%; width: 45%; height: auto; margin-top: 5%;" src="${userObj.imageURL}" alt="">
     </div>
 	</div>`);
