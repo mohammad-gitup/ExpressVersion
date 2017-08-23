@@ -9,7 +9,7 @@ You can either create or join a room. By creating a room, the music you play on 
 If you join a room, your music will synchronously, in real-time, play whatever the DJ is playing. 
 The DJ can also the pass the DJ functionality by clicking on the listeners photo. In doing so, is the DJ and can project his/her music to everyone in the room!
 
-Check out our current beta build at: https://auxen.herokuapp.com/login
+Check out our current beta build at: https://auxen.live
 
 
 ### Technologies used:
